@@ -2,7 +2,8 @@
     --green: #155F5A;
     --red: #C0124F;
     --creme: #ede1d3;
-    --red-hover: #A70F43;
+    --caramel: #a89e92;
+    --red-hover: #e67099;
     --background: #F7F6F2;
     --white: #FFFFFF;
     --text: #333333;
@@ -37,12 +38,43 @@ header{
     padding-bottom: 10px;
 }
 
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.navbar {
+    padding: 10px 0;
+}
 
-    padding:25px 10%;
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 50px; 
+}
+
+.welcome-left,
+.welcome-right {
+    color: var(--creme);
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    transition: .3s;
+    cursor: default;
+}
+
+.welcome-left:hover,
+.welcome-right:hover{
+    color: var(--red-hover);
+}
+
+.welcome-left{
+    border-left: 2px solid var(--creme);
+    padding-left: 20px;
+}
+
+.welcome-right {
+    direction: rtl;
+    font-family: "Vazirmatn", sans-serif;
+    border-right: 2px solid var(--creme);
+    padding-right: 20px;
 }
 
 .navbar ul{
@@ -51,9 +83,46 @@ header{
     gap:30px;
 }
 
-.navbar a{
-    color:white;
-    font-weight:bold;
+.navbar ul li a {
+    color:var(--creme);
+    padding: 10px 20px;
+    display: block;
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.navbar ul li a:hover {
+    color: var(--red-hover);
+}
+
+.navbar ul li a i {
+    margin-right: 10px;
+}
+
+.navbar ul li:last-child a {
+    margin-left: 15px;
+    color: var(--red);
+    transition: 0.5s;
+}
+
+.navbar ul li:last-child a:hover {
+    background: #f78fb4;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 20px;
+    background: var(--creme);
+    color: var(--red);
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.5s;
 }
 
 .hero {
@@ -92,11 +161,40 @@ header{
     border: 4px solid #000000;
     border-radius: 5px;
 
-    background: #c9beb1;
+    background: var(--caramel);
     color: #000000;
 
     cursor: pointer;
     transition: 0.5s;
+}
+
+.divider-gradient{
+    width: 100%;
+    height: 84px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--red)
+    );
+}
+
+.divider-gradient p{
+    font-family: "Vazirmatn", sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+
+    color: var(--creme);
+
+    direction: rtl;
+    text-align: center;
+
+    letter-spacing: .5px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,.2);
 }
 
 section{
