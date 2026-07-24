@@ -28,22 +28,48 @@
       <nav class="navbar">
         <div class="navbar-content">
           <div class="welcome-left">
-            Welcome!
+              Welcome!
           </div>
-    
-          <ul>
-            <li><a href="#"><i class="fa-solid fa-house"></i>Home</a></li>
-            <li><a href="#"><i class="fa-solid fa-book"></i>Lessons</a></li>
-            <li><a href="#"><i class="fa-solid fa-face-smile-beam"></i>About Me</a></li>
-            <li>
-              <a class="btn" href="#">
-                <i class="fa-solid fa-user"></i>Log In
-              </a>
-            </li>
+  
+          <!-- Hidden checkbox -->
+          <input type="checkbox" id="menu-toggle">
+  
+          <!-- Hamburger icon -->
+          <label class="hamburger">
+              <i class="fa-solid fa-bars"></i>
+          </label>
+  
+          <ul class="nav-links" id="nav-links">
+              <li><a href="#"><i class="fa-solid fa-house"></i>Home</a></li>
+              
+              <li class="lessons-dropdown">
+
+                <a href="#" id="lessons-btn">
+                    <i class="fa-solid fa-book"></i>
+                    Lessons
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+            
+                <ul class="lessons-menu" id="lessons-menu">
+            
+                    <li><a href="#">Reading</a></li>
+                    <li><a href="#">Writing</a></li>
+                    <li><a href="#">Speaking</a></li>
+                    <li><a href="#">Listening</a></li>
+            
+                </ul>
+              </li>
+
+              <li><a href="#"><i class="fa-solid fa-face-smile-beam"></i>About Me</a></li>
+              <li>
+                  <a class="btn" href="#">
+                      <i class="fa-solid fa-user"></i>Log In
+                  </a>
+              </li>
           </ul>
-    
+  
           <div class="welcome-right">
-            خوش آمدید!
+              خوش آمدید!
           </div>
         </div>
       </nav>
@@ -67,19 +93,6 @@
       <p>
           مسیر یادگیری انگلیسی شما از اینجا، با یک روش ساختاریافته آغاز می‌شود!
       </p>
-    </section>
-    
-    <section class="levels">
-      <h2>English Levels</h2>
-
-      <div class="card-container">
-        <div class="card">A1 - Beginner</div>
-        <div class="card">A2 - Elementary</div>
-        <div class="card">B1 - Intermediate</div>
-        <div class="card">B2 - Upper Intermediate</div>
-        <div class="card">C1 - Advanced</div>
-        <div class="card">C2 - Fluent</div>
-      </div>
     </section>
 
     <section class="skills">
@@ -160,6 +173,8 @@
     <footer>
       <p>© 2026 EnglishHub | Learn English with Mahdis.</p>
     </footer>
+
+    <script src="script.js"></script>
   </body>
 
 </html>
