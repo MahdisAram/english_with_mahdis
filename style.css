@@ -266,6 +266,67 @@ header{
     text-shadow: 1px 1px 3px rgba(0,0,0,.2);
 }
 
+.introduction{
+    background: var(--creme);
+    padding: 50px 20px;
+}
+
+.introduction .container-sm{
+    max-width: 900px;
+}
+
+.introduction h2{
+    font-family: "Vazirmatn", sans-serif;
+    color: var(--green);
+    font-size: 2.6rem;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.introduction h2::after{
+    content: "";
+    display: block;
+    width: 90px;
+    height: 4px;
+    background: var(--red);
+    border-radius: 50px;
+    margin: 15px auto 0;
+}
+
+.introduction p{
+    font-family: "Vazirmatn", sans-serif;
+    direction: rtl;
+    text-align: justify;
+    color: var(--text);
+    font-size: 1.2rem;
+    line-height: 2.4;
+    margin-bottom: 20px;
+}
+
+.introduction-link{
+    margin-top: 40px;
+}
+
+.introduction-link p{
+    font-family: "Vazirmatn", sans-serif;
+    direction: rtl;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.introduction-link a{
+    color: var(--red);
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.introduction-link a:hover{
+    color: var(--green);
+    text-decoration: underline;
+}
+
 section{
     padding:80px 10%;
 }
