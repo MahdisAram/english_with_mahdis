@@ -362,9 +362,29 @@ section h2::after{
 footer{
     background-color: var(--green);
     color: var(--white);
+    padding: 30px 50px;
+}
 
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-logo img{
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.footer-text{
+    flex: 1;
     text-align: center;
-    padding: 40px;
+}
+
+.footer-text p{
+    margin: 0;
 }
 
 /* Utility classes */
@@ -499,6 +519,19 @@ footer{
 
     .newsletter button{
         width:100%;
+    }
+    
+    .footer-content{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo img{
+        width: 100px;
+    }
+
+    .footer-text{
+        text-align: center;
     }
 
 }
