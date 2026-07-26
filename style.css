@@ -50,14 +50,10 @@ header{
     padding: 0 50px; 
 }
 
-.welcome-left,
-.welcome-right {
-    color: var(--creme);
-    font-size: 24px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    transition: .3s;
-    cursor: default;
+.welcome-group{
+    display:flex;
+    align-items:center;
+    gap:20px;
 }
 
 .welcome-left:hover,
@@ -65,16 +61,39 @@ header{
     color: var(--red-hover);
 }
 
-.welcome-left{
-    border-left: 2px solid var(--creme);
-    padding-left: 20px;
+.welcome-left,
+.welcome-right{
+    color: var(--creme);
+    font-size:24px;
+    font-weight:300;
+    letter-spacing:2px;
+    transition:.3s;
+    cursor:default;
 }
 
-.welcome-right {
-    direction: rtl;
-    font-family: "Vazirmatn", sans-serif;
-    border-right: 2px solid var(--creme);
-    padding-right: 20px;
+.welcome-right{
+    direction:rtl;
+    font-family:"Vazirmatn", sans-serif;
+}
+
+.welcome-left{
+    position:relative;
+    padding-right:20px;
+}
+
+.welcome-left::after{
+    content:"";
+    position:absolute;
+
+    top:50%;
+    right:0;
+
+    transform:translateY(-50%);
+
+    width:2px;
+    height:28px;
+
+    background-color:var(--creme);
 }
 
 .nav-links{
@@ -412,40 +431,38 @@ footer{
         display:flex;
     }
 
+    /* make navbar the positioning context */
 
-    /* make welcomes smaller */
+    .navbar-content{
+        position:relative;
+    }
+
+    /* center BOTH welcomes */
+
+    .welcome-group{
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+
+        display:flex;
+        align-items:center;
+        gap:18px;
+    }
+
+    /* make them smaller */
 
     .welcome-left,
     .welcome-right{
-        font-size:18px;
+        display:block;
+        font-size:20px;
     }
-
-    /* Hide the English welcome */
-    .welcome-left{
-        display: none;
-    }
-
-
-    /* Center the Persian welcome */
-    .welcome-right{
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-
-        border-right: none;
-        padding-right: 0;
-
-        font-size: 20px;
-    }
-
 
     /* Keep the hamburger menu on the right */
     .hamburger{
-        display: block;
-
-        margin-left: auto;
+        display:block;
+        margin-left:auto;
+        font-size:32px;
     }
-
 
     /* Give the navbar a positioning context */
     .navbar-content{
@@ -458,7 +475,6 @@ footer{
         width:90%;
         font-size:28px;
     }
-
 
     /* Persian text responsive */
 
@@ -480,7 +496,6 @@ footer{
         width:100%;
         margin-bottom:15px;
     }
-
 
     .newsletter button{
         width:100%;
