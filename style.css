@@ -306,14 +306,18 @@ header{
 }
 
 .introduction-link{
-    margin-top: 40px;
+    max-width:900px;
+    margin:40px auto 0;
 }
 
 .introduction-link p{
-    font-family: "Vazirmatn", sans-serif;
-    direction: rtl;
-    text-align: center;
-    margin-bottom: 0;
+    font-family:"Vazirmatn", sans-serif;
+    direction:rtl;
+    text-align:justify;
+    color:var(--text);
+    font-size:1.2rem;
+    line-height:2.4;
+    margin-bottom:12px;
 }
 
 .introduction-link a{
@@ -327,6 +331,13 @@ header{
 .introduction-link a:hover{
     color: var(--green);
     text-decoration: underline;
+}
+
+.introduction-link i{
+    margin-left:10px;
+    color:var(--red);
+    font-size:1.15rem;
+    vertical-align:middle;
 }
 
 /* LEARNING PATHS */
