@@ -1,6 +1,7 @@
 :root{
     --green: #155F5A;
     --red: #C0124F;
+    --yellow: #F1BE40;
     --creme: #ede1d3;
     --caramel: #a89e92;
     --red-hover: #e67099;
@@ -320,11 +321,139 @@ header{
     font-weight: 700;
     text-decoration: none;
     transition: 0.3s;
+    text-decoration:underline;
 }
 
 .introduction-link a:hover{
     color: var(--green);
     text-decoration: underline;
+}
+
+/* LEARNING PATHS */
+
+.learning-paths{
+    background: var(--creme);
+    padding: 40px 20px 90px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:60px;
+}
+
+.learning-card{
+    width:100%;
+    max-width:1100px;
+}
+
+.card-heading{
+    font-family:"Vazirmatn", sans-serif;
+    color:var(--creme);
+    text-align:center;
+    font-size:2rem;
+    font-weight:700;
+    padding:18px 35px;
+    border:4px solid black;
+    border-radius:12px;
+    margin-bottom:28px;
+}
+
+.card-body{
+    border:4px solid black;
+    border-radius:12px;
+    padding:28px;
+    overflow:hidden;
+}
+
+.card-body img{
+    width:100%;
+    display:block;
+    border-radius:5px;
+}
+
+.card-body p{
+    font-family:"Vazirmatn", sans-serif;
+    direction:rtl;
+    text-align:justify;
+    line-height:2.1;
+    font-size:1.65rem;
+    margin-top:28px;
+}
+
+/* COLORS */
+.green-card .card-heading,
+.green-card .card-body{
+    background:var(--green);
+    color:white;
+}
+
+.red-card .card-heading,
+.red-card .card-body{
+    background:var(--red);
+    color:white;
+}
+
+.yellow-card .card-heading,
+.yellow-card .card-body{
+    background:var(--yellow);
+    color:black;
+}
+
+/* CARD WIDTHS */
+/* EVOLVE */
+.green-card{
+    max-width:1150px;
+}
+
+/* SPEAK NOW */
+.narrow-card{
+    max-width:760px;
+}
+
+/* IELTS */
+.yellow-card{
+    max-width:920px;
+}
+
+.more-text{
+    display: none;
+}
+
+.more-text.show{
+    display: inline;
+}
+
+.read-more-btn{
+    display:block;
+    margin-top:auto;
+    margin-left:auto;
+    margin-right:auto;
+    border:none;
+    background:none;
+    outline:none;
+    box-shadow:none;
+    font-family:"Vazirmatn", sans-serif;
+    font-size:1.3rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s ease;
+}
+
+.red-btn{
+    color:var(--red);
+}
+
+.red-btn:hover{
+    opacity:0.7;
+    text-decoration:underline;
+}
+
+.yellow-btn{
+    color:var(--yellow);
+}
+
+.yellow-btn:hover{
+    opacity:0.7;
+    text-decoration:underline;
 }
 
 section{
@@ -583,6 +712,31 @@ footer{
         font-size: 25px;
         line-height: 1.8;
         padding: 0 15px;
+    }
+
+    .learning-paths{
+        gap:40px;
+    }
+    
+    .card-heading{
+        font-size:1.2rem;
+        line-height:1.8;
+        padding:15px;
+    }
+    
+    .card-body{
+        padding:18px;
+    }
+    
+    .card-body p{
+        font-size:1rem;
+        line-height:2;
+    }
+    
+    .green-card,
+    .yellow-card,
+    .narrow-card{
+        max-width:100%;
     }
 
     .newsletter input{

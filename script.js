@@ -62,3 +62,19 @@ document.addEventListener("click", function (event) {
         lessonsMenu.classList.remove("show");
     }
 });
+
+const readMoreButtons =
+    document.querySelectorAll(".read-more-btn");
+readMoreButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const moreText = button
+            .closest(".card-body")
+            .querySelector(".more-text");
+        moreText.classList.toggle("show");
+        if (moreText.classList.contains("show")) {
+            button.textContent = "بستن";
+        } else {
+            button.textContent = "ادامه مطلب";
+        }
+    });
+});
