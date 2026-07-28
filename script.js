@@ -1,10 +1,8 @@
 // HAMBURGER MENU
-
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.getElementById("nav-links");
 
 // Open and close the hamburger menu
-
 hamburger.addEventListener("click", function (event) {
     navLinks.classList.toggle("active");
 
@@ -14,7 +12,6 @@ hamburger.addEventListener("click", function (event) {
 
 // CLOSE HAMBURGER AFTER CLICKING
 // A NAVBAR LINK (EXCEPT LESSONS)
-
 const links = document.querySelectorAll(".nav-links a");
 
 links.forEach(link => {
@@ -30,19 +27,16 @@ links.forEach(link => {
 });
 
 // LESSONS DROPDOWN MENU
-
 const lessonsBtn = document.getElementById("lessons-btn");
 const lessonsMenu = document.getElementById("lessons-menu");
 
 // Open and close the Lessons dropdown menu
-
 lessonsBtn.addEventListener("click", function (e) {
     e.preventDefault();
     lessonsMenu.classList.toggle("show");
 });
 
 // CLOSE MENUS WHEN CLICKING OUTSIDE
-
 document.addEventListener("click", function (event) {
 
     // Close the hamburger menu if the user clicks outside of it.
@@ -63,8 +57,8 @@ document.addEventListener("click", function (event) {
     }
 });
 
-const readMoreButtons =
-    document.querySelectorAll(".read-more-btn");
+const readMoreButtons = document.querySelectorAll(".read-more-btn");
+
 readMoreButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const moreText = button

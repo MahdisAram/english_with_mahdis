@@ -28,6 +28,11 @@ a{
     text-decoration:none;
 }
 
+img{
+    max-width:100%;
+    height:auto;
+}
+
 header{
     background: linear-gradient(
         135deg,
@@ -70,11 +75,12 @@ header{
     letter-spacing:2px;
     transition:.3s;
     cursor:default;
+    white-space: nowrap;
 }
 
 .welcome-right{
-    direction:rtl;
-    font-family:"Vazirmatn", sans-serif;
+    direction: rtl;
+    font-family: "Vazirmatn", sans-serif;
 }
 
 .welcome-left{
@@ -85,16 +91,17 @@ header{
 .welcome-left::after{
     content:"";
     position:absolute;
-
     top:50%;
     right:0;
-
     transform:translateY(-50%);
-
     width:2px;
     height:28px;
-
     background-color:var(--creme);
+}
+
+.welcome-icon{
+    display:none !important;
+    color:var(--creme);
 }
 
 .nav-links{
@@ -124,6 +131,10 @@ header{
 .nav-links > li:last-child > a{
     margin-left: 15px;
     color: var(--red);
+    font-size: 20px;
+    font-weight: bold;
+    direction:rtl;
+    font-family:"Vazirmatn", sans-serif;
     transition: 0.5s;
 }
 
@@ -131,7 +142,10 @@ header{
     background: #f78fb4;
 }
 
-/* LESSONS DROPDOWN */
+.nav-links > li:last-child > a i{
+    margin-right: 0;
+    margin-left: 10px;
+}
 
 .lessons-dropdown{
     position: relative;
@@ -182,7 +196,6 @@ header{
 }
 
 /* HAMBURGER MENU */
-
 #menu-toggle{
     display:none;
 }
@@ -340,8 +353,6 @@ header{
     vertical-align:middle;
 }
 
-/* LEARNING PATHS */
-
 .learning-paths{
     background: var(--creme);
     padding: 40px 20px 90px;
@@ -422,7 +433,7 @@ header{
     max-width:760px;
 }
 
-/* IELTS */
+/* MINDSET */
 .yellow-card{
     max-width:920px;
 }
@@ -470,7 +481,7 @@ header{
 }
 
 section{
-    padding:80px 10%;
+    padding:80px 40px;
 }
 
 section h2{
@@ -480,7 +491,44 @@ section h2{
     font-size:2.4rem;
 }
 
-/* LANGUAGE SKILLS */
+.skills-intro{
+    background: var(--creme);
+    padding: 50px 20px;
+}
+
+.skills-intro .container-sm{
+    max-width: 900px;
+}
+
+.skills-intro h2{
+    font-family: "Vazirmatn", sans-serif;
+    color: var(--green);
+    font-size: 2.6rem;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.skills-intro h2::after{
+    content: "";
+    display: block;
+    width: 90px;
+    height: 4px;
+    background: var(--red);
+    border-radius: 50px;
+    margin: 15px auto 0;
+}
+
+.skills-intro p{
+    font-family: "Vazirmatn", sans-serif;
+    direction: rtl;
+    text-align: justify;
+    color: var(--text);
+    font-size: 1.2rem;
+    line-height: 2.4;
+    margin-bottom: 20px;
+}
+
 .language-skills{
     background:var(--creme);
     padding:40px 20px 90px;
@@ -518,17 +566,22 @@ section h2{
     padding:16px;
     border:4px solid black;
     border-radius:7px;
-    overflow:visible;
+    overflow: visible;
     background:var(--caramel);
+    cursor:pointer;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
 }
 
 .skill-card img{
     width:100%;
     display:block;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    aspect-ratio:4 / 3;
+    object-fit:cover;
     border-radius:5px;
-    margin-bottom: 40px;
+    margin-bottom:40px;
 }
 
 .skill-label{
@@ -545,6 +598,9 @@ section h2{
     font-size:1.8rem;
     letter-spacing:3px;
     font-weight:400;
+    transition:
+        bottom .3s ease,
+        box-shadow .3s ease;
 }
 
 /* COLORS */
@@ -561,6 +617,25 @@ section h2{
 .yellow-label{
     background:var(--yellow);
     color:black;
+}
+
+/* SKILL CARD HOVER EFFECTS */
+.skill-card:hover{
+    transform: translateY(-12px);
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,.18);
+}
+
+.skill-card:hover .skill-label{
+    bottom:-15px;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.18);
+}
+
+.skill-card:active{
+    transform: translateY(-6px) scale(.98);
 }
 
 footer{
@@ -604,13 +679,14 @@ footer{
     padding: 0 15px;
 }
 
-@media(min-width:1151px){
-        .lessons-dropdown:hover .lessons-menu{
+@media(min-width:1231px){
+    
+    .lessons-dropdown:hover .lessons-menu{
         display:block;
     }
 }
 
-@media(max-width:1150px){
+@media(max-width:1230px){
     
     /* show hamburger icon */
     .hamburger{
@@ -672,6 +748,24 @@ footer{
     .welcome-right{
         display:block;
         font-size:20px;
+    }
+
+    .welcome-icon{
+        display:inline-block !important;
+    }
+
+    /* Hide the Persian welcome text */
+    .welcome-right{
+        display: none;
+    }
+
+    /* Remove the vertical separator */
+    .welcome-left{
+        padding-right: 0;
+    }
+
+    .welcome-left::after{
+        display: none;
     }
 
     /* Keep the hamburger menu on the right */
@@ -760,3 +854,172 @@ footer{
         text-align: center;
     }
 }
+
+@media (max-width: 768px){
+
+    section{
+        padding: 50px 20px;
+    }
+
+    .navbar-content{
+        padding: 0 20px;
+    }
+
+    .welcome-left{
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .welcome-icon{
+        font-size: 14px;
+    }
+
+    .hero .hero-button{
+        width: 100%;
+        max-width: 320px;
+        height: 60px;
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+
+    .divider-gradient{
+        min-height: auto;
+        padding: 25px 15px;
+    }
+
+    .divider-gradient p{
+        font-size: 20px;
+        line-height: 1.8;
+    }
+
+    .introduction h2,
+    .skills-intro h2{
+        font-size: 2rem;
+    }
+
+    .introduction p,
+    .introduction-link p,
+    .skills-intro p{
+        font-size: 1rem;
+        line-height: 2.1;
+    }
+
+    .card-heading{
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .card-body{
+        padding: 15px;
+    }
+
+    .card-body p{
+        font-size: .95rem;
+        line-height: 2;
+    }
+
+    .read-more-btn{
+        font-size: 1rem;
+    }
+
+    .skills-grid{
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .skill-label{
+        font-size: 1.2rem;
+    }
+
+    footer{
+        padding: 30px 20px;
+    }
+
+    .footer-text p{
+        font-size: .9rem;
+        line-height: 1.8;
+    }
+}
+
+@media (max-width: 430px){
+
+    .navbar-content{
+        padding: 0 15px;
+    }
+
+    .welcome-group{
+        gap: 6px;
+    }
+
+    .welcome-left{
+        font-size: 15px;
+    }
+
+    .welcome-icon{
+        font-size: 11px;
+    }
+
+    .hamburger{
+        font-size: 26px;
+    }
+
+    .hero{
+        padding-bottom: 25px;
+    }
+
+    .hero .hero-button{
+        height: 50px;
+        font-size: 18px;
+        letter-spacing: 2px;
+        border-width: 3px;
+    }
+
+    .divider-gradient p{
+        font-size: 18px;
+    }
+
+    .introduction h2,
+    .skills-intro h2{
+        font-size: 1.7rem;
+    }
+
+    .introduction p,
+    .introduction-link p,
+    .skills-intro p{
+        font-size: .9rem;
+        line-height: 2;
+    }
+
+    .card-heading{
+        font-size: .9rem;
+        line-height: 1.8;
+    }
+
+    .card-body p{
+        font-size: .85rem;
+    }
+
+    .read-more-btn{
+        font-size: .9rem;
+    }
+
+    .skill-card{
+        padding: 10px;
+    }
+
+    .skill-label{
+        font-size: .9rem;
+        width: 90%;
+        letter-spacing: 1px;
+    }
+
+    .footer-logo img{
+        width: 80px;
+    }
+
+    .footer-text p{
+        font-size: .8rem;
+    }
+}
+
+
