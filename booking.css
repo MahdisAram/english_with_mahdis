@@ -420,6 +420,7 @@ textarea{
     border-radius:10px;
     background:var(--creme);
     font-family:"Vazirmatn",sans-serif;
+    direction:rtl;
     font-size:1rem;
 }
 
@@ -509,6 +510,7 @@ textarea:focus{
 textarea{
     resize:vertical;
     min-height:150px;
+    direction:rtl;
 }
 
 /* SUBMIT */
@@ -550,6 +552,7 @@ textarea{
     color:var(--green);
     text-align:center;
     font-size:2.5rem;
+    margin-bottom:40px;
 }
 
 .faq-item{
@@ -568,26 +571,52 @@ textarea{
     justify-content:space-between;
     align-items:center;
     font-family:"Vazirmatn",sans-serif;
+    direction:rtl;
+
     font-size:1.1rem;
     cursor:pointer;
+    transition: .35s;
+}
+
+.faq-question:hover{
+    background:var(--red);
+}
+
+.faq-question i{
+    transition:transform .35s ease;
+}
+
+.faq-question.active{
+    border-radius:10px 10px 0 0;
+}
+
+.faq-question.active i{
+    transform:rotate(180deg);
 }
 
 .faq-answer{
-    display:none;
-    padding:20px;
+    max-height:0;
+    overflow:hidden;
+
     background:white;
-    border:3px solid black;
-    border-top:none;
+
     border-radius:0 0 10px 10px;
+
     font-family:"Vazirmatn",sans-serif;
     direction:rtl;
     line-height:2;
+
+    padding:0 20px;
+
+    transition:
+        max-height .2s ease,
+        padding .2s ease;
 }
 
 .faq-answer.show{
-    display:block;
+    max-height:300px;
+    padding:20px;
 }
-
 /* FOOTER */
 footer{
     background-color: var(--green);

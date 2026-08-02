@@ -135,30 +135,38 @@ radioOptions.forEach(radio=>{
     });
 });
 
+
 // FAQ ACCORDION
-const faqButtons =
-document.querySelectorAll(".faq-question");
+document.addEventListener("DOMContentLoaded", () => {
 
-faqButtons.forEach(button=>{
-    button.addEventListener("click",()=>{
+    const questions = document.querySelectorAll(".faq-question");
 
-        const answer =
-        button.nextElementSibling;
+    questions.forEach(question => {
 
-        answer.classList.toggle("show");
+        question.addEventListener("click", () => {
 
-        const icon =
-        button.querySelector("i");
+            const answer = question.nextElementSibling;
+            const isOpen = answer.classList.contains("show");
 
-        if(icon){
-            icon.classList.toggle(
-                "fa-chevron-down"
-            );
-            icon.classList.toggle(
-                "fa-chevron-up"
-            );
-        }
+            // Close every FAQ
+            document.querySelectorAll(".faq-answer").forEach(item => {
+                item.classList.remove("show");
+            });
+
+            document.querySelectorAll(".faq-question").forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            // If it wasn't already open, open it
+            if (!isOpen) {
+                answer.classList.add("show");
+                question.classList.add("active");
+            }
+
+        });
+
     });
+
 });
 
 // FORM SUBMISSION
