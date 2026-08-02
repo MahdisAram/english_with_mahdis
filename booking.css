@@ -286,7 +286,6 @@ section h2{
     z-index:0;
 }
 
-
 .image-wrapper{
     width:100%;
     max-width:480px;
@@ -299,7 +298,6 @@ section h2{
     transform:rotate(2deg);
     transition:.4s ease;
 }
-
 
 .image-wrapper::before{
     content:"";
@@ -314,7 +312,6 @@ section h2{
     z-index:-1;
 }
 
-
 .image-wrapper img{
     width:100%;
     height:450px;
@@ -322,7 +319,6 @@ section h2{
     border-radius:18px;
     display:block;
 }
-
 
 .image-wrapper:hover{
     transform:rotate(0deg) translateY(-10px);
@@ -991,8 +987,7 @@ footer{
     .image-wrapper{
         padding:10px;
     }
-    
-    
+
     .image-wrapper img{
         height:280px;
     }
