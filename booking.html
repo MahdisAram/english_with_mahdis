@@ -35,6 +35,12 @@
         <nav class="navbar">
 
             <div class="navbar-content">
+                <div class="nav-logo">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="English With Mahdis Logo">
+                    </a>
+                </div>
+                
                 <input type="checkbox" id="menu-toggle">
 
                 <label class="hamburger">
@@ -84,10 +90,6 @@
 
         <div class="booking-hero-content">
             <div class="booking-text">
-                <span class="booking-tag">
-                    <i class="fa-solid fa-calendar-check"></i>
-                    PRIVATE ENGLISH LESSONS
-                </span>
                 <h1>
                     رزرو کلاس آنلاین خصوصی
                 </h1>
@@ -112,11 +114,7 @@
 
     </section>
 
-    <section class="divider-gradient">
-        <p>
-            اولین قدم برای شروع یادگیری هدفمند زبان انگلیسی
-        </p>
-    </section>
+    <section class="divider-gradient"></section>
 
     <section class="booking-intro">
 
@@ -141,7 +139,7 @@
 
     <section class="booking-section" id="booking-form">
 
-        <form class="booking-form">
+        <form class="booking-form" id="bookingForm">
             <div class="booking-card green-card">
                 <div class="card-heading">
                     <i class="fa-solid fa-user"></i>
@@ -150,29 +148,39 @@
                 <div class="card-body">
                     <div class="form-grid">
                         <div class="input-group">
-                            <label>
+                            <label for="fullName">
                                 نام و نام خانوادگی
                             </label>
                             <input
                                 type="text"
+                                name="fullName"
+                                id="fullName"
+                                autocomplete="name"
                                 placeholder="نام خود را وارد کنید"
                                 required>
                         </div>
                         <div class="input-group">
-                            <label>
+                            <label for="email">
                                 ایمیل
                             </label>
                             <input
                                 type="email"
+                                name="email"
+                                id="email"
+                                autocomplete="email"
                                 placeholder="example@email.com"
                                 required>
                         </div>
                         <div class="input-group">
-                            <label>
+                            <label for="phone">
                                 شماره تماس
                             </label>
                             <input
                                 type="tel"
+                                name="phone"
+                                id="phone"
+                                autocomplete="phone"
+                                inputmode="numeric"
                                 placeholder="09xxxxxxxxx"
                                 required>
                         </div>
@@ -201,21 +209,21 @@
                     </p>
                     <div class="goal-grid">
                         <label class="goal-option">
-                            <input type="radio" name="goal">
+                            <input name="goal" id="goal" value="general" required>
                             <span>
                                 <i class="fa-solid fa-earth-americas"></i>
                                 General English
                             </span>
                         </label>
                         <label class="goal-option">
-                            <input type="radio" name="goal">
+                            <input name="goal" id="goal" value="conversation" required>
                             <span>
                                 <i class="fa-solid fa-comments"></i>
                                 Conversation
                             </span>
                         </label>
                         <label class="goal-option">
-                            <input type="radio" name="goal">
+                            <input name="goal" id="goal" value="IELTS" required>
                             <span>
                                 <i class="fa-solid fa-medal"></i>
                                 IELTS
@@ -226,46 +234,57 @@
             </div>
 
             <div class="booking-card yellow-card">
+
                 <div class="card-heading">
                     <i class="fa-solid fa-calendar-days"></i>
-                    روزهای ترجیحی
+                    انتخاب تاریخ و ساعت کلاس
                 </div>
+            
                 <div class="card-body">
+            
                     <p class="section-description">
-                        می‌توانید یک یا چند روز را انتخاب کنید.
+                        ابتدا ماه مورد نظر را انتخاب کنید، سپس روز و ساعت مناسب خود را مشخص نمایید.
                     </p>
-                    <div class="days-grid">
-                        <button type="button" class="day-btn">Saturday</button>
-                        <button type="button" class="day-btn">Sunday</button>
-                        <button type="button" class="day-btn">Monday</button>
-                        <button type="button" class="day-btn">Tuesday</button>
-                        <button type="button" class="day-btn">Wednesday</button>
-                        <button type="button" class="day-btn">Thursday</button>
-                    </div>
-                </div>
-            </div>
+            
+                    <div class="calendar-header">
 
-            <div class="booking-card green-card">
-                <div class="card-heading">
-                    <i class="fa-solid fa-clock"></i>
-                    ساعات ترجیحی
-                </div>
-                <div class="card-body">
-                    <p class="section-description">
-                        بازه زمانی مناسب خود را انتخاب کنید.
-                    </p>
-                    <div class="time-grid">
-                        <button type="button" class="time-btn">
-                            Morning
+                        <button type="button" class="month-btn" id="prevMonth">
+                            <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <button type="button" class="time-btn">
-                            Afternoon
+                    
+                        <h3 id="month-name"></h3>
+                    
+                        <button type="button" class="month-btn" id="nextMonth">
+                            <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                        <button type="button" class="time-btn">
-                            Evening
-                        </button>
+                    
                     </div>
+                    
+                    <div class="weekdays">
+                        <span>جمعه</span>
+                        <span>پنجشنبه</span>
+                        <span>چهارشنبه</span>
+                        <span>سه‌شنبه</span>
+                        <span>دوشنبه</span>
+                        <span>یکشنبه</span>
+                        <span>شنبه</span>
+                    </div>
+                    
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    
+                    <div class="time-selection">
+                    
+                        <h4>زمان‌های موجود</h4>
+                    
+                        <div class="time-grid" id="timeGrid">
+                            <p>لطفاً ابتدا تاریخ را انتخاب کنید.
+                            </p>
+                        </div>
+                    
+                    </div>
+            
                 </div>
+            
             </div>
 
             <div class="booking-card red-card">
@@ -344,6 +363,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -285,3 +285,535 @@ function(event){
     selectedTime="";
 });
 }
+
+
+/* ==========================
+   PERSIAN (JALALI) CALENDAR
+========================== */
+
+
+const monthName = document.getElementById("month-name");
+const calendarGrid = document.getElementById("calendarGrid");
+const timeGrid = document.getElementById("timeGrid");
+
+const prevMonth = document.getElementById("prevMonth");
+const nextMonth = document.getElementById("nextMonth");
+
+
+// Current Persian date
+let today = jalaali.toJalaali(new Date());
+
+let currentYear = today.jy;
+let currentMonth = today.jm;
+
+let selectedDate = null;
+
+
+
+/*
+    Available class times
+
+    Format:
+
+    "Jalali Year-Month-Day"
+
+*/
+
+const availability = {
+
+    "1405-05-15": [
+        "09:00",
+        "11:00",
+        "15:00"
+    ],
+
+    "1405-05-18": [
+        "14:00",
+        "17:00"
+    ],
+
+    "1405-05-22": [
+        "10:00",
+        "12:00",
+        "18:00"
+    ],
+
+    "1405-06-02": [
+        "09:00",
+        "13:00"
+    ],
+
+    "1405-06-10": [
+        "11:00",
+        "16:00"
+    ]
+
+};
+
+
+
+/*
+    Convert numbers into Persian format
+*/
+
+function persianNumber(number){
+
+    return number
+    .toString()
+    .replace(/\d/g,function(d){
+        return "۰۱۲۳۴۵۶۷۸۹"[d];
+    });
+
+}
+
+
+
+/*
+    Persian month names
+*/
+
+const persianMonths = [
+
+    "فروردین",
+    "اردیبهشت",
+    "خرداد",
+    "تیر",
+    "مرداد",
+    "شهریور",
+    "مهر",
+    "آبان",
+    "آذر",
+    "دی",
+    "بهمن",
+    "اسفند"
+
+];
+
+
+
+/*
+    Convert Jalali date to string
+
+    Example:
+
+    1405-05-15
+
+*/
+
+function formatJalaliDate(year,month,day){
+
+    return (
+        year +
+        "-" +
+        String(month).padStart(2,"0") +
+        "-" +
+        String(day).padStart(2,"0")
+    );
+
+}
+
+
+
+
+function generateCalendar(){
+
+
+    calendarGrid.innerHTML="";
+
+
+    /*
+        Show month title
+    */
+
+    monthName.textContent =
+        persianMonths[currentMonth-1]
+        +
+        " "
+        +
+        persianNumber(currentYear);
+
+
+
+    /*
+        Number of days in this month
+    */
+
+    const daysInMonth =
+        jalaali.jalaaliMonthLength(
+            currentYear,
+            currentMonth
+        );
+
+
+
+    /*
+        Find first weekday
+
+        Calendar starts Saturday
+
+    */
+
+    const gregorianFirstDay =
+        jalaali.toGregorian(
+            currentYear,
+            currentMonth,
+            1
+        );
+
+
+    const firstDay =
+        new Date(
+            gregorianFirstDay.gy,
+            gregorianFirstDay.gm-1,
+            gregorianFirstDay.gd
+        );
+
+
+
+    /*
+        JavaScript:
+
+        Sunday = 0
+
+        We need:
+
+        Saturday = 0
+
+    */
+
+    let offset =
+        (firstDay.getDay()+1)%7;
+
+
+
+    /*
+        Empty boxes before month starts
+    */
+
+    for(
+        let i=0;
+        i<offset;
+        i++
+    ){
+
+        const empty =
+        document.createElement("div");
+
+        calendarGrid.appendChild(empty);
+
+    }
+
+
+
+
+    /*
+        Create days
+    */
+
+    for(
+        let day=1;
+        day<=daysInMonth;
+        day++
+    ){
+
+
+        const button =
+        document.createElement("button");
+
+
+        button.className =
+        "calendar-day";
+
+
+        button.textContent =
+        persianNumber(day);
+
+
+
+        const dateKey =
+        formatJalaliDate(
+            currentYear,
+            currentMonth,
+            day
+        );
+
+
+
+        /*
+            Check availability
+        */
+
+        if(
+            availability[dateKey]
+        ){
+
+            button.classList.add(
+                "available"
+            );
+
+        }
+
+
+
+        /*
+            Disable past dates
+        */
+
+        if(
+            isPastDate(
+                currentYear,
+                currentMonth,
+                day
+            )
+        ){
+
+            button.disabled=true;
+
+            button.classList.add(
+                "disabled"
+            );
+
+        }
+
+
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+
+                if(
+                    !availability[dateKey]
+                )
+                return;
+
+
+
+                document
+                .querySelectorAll(
+                    ".calendar-day"
+                )
+                .forEach(btn=>{
+                    btn.classList.remove(
+                        "active"
+                    );
+                });
+
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                selectedDate=dateKey;
+
+
+                loadTimes(dateKey);
+
+
+            }
+        );
+
+
+
+        calendarGrid.appendChild(button);
+
+
+    }
+
+
+}
+
+
+
+
+/*
+    Check if selected date is before today
+*/
+
+
+function isPastDate(
+    year,
+    month,
+    day
+){
+
+
+    const selected =
+    jalaali.toGregorian(
+        year,
+        month,
+        day
+    );
+
+
+    const selectedGregorian =
+    new Date(
+        selected.gy,
+        selected.gm-1,
+        selected.gd
+    );
+
+
+    const now =
+    new Date();
+
+
+    now.setHours(
+        0,0,0,0
+    );
+
+
+    return selectedGregorian < now;
+
+}
+
+
+
+
+
+/*
+    Generate available times
+*/
+
+
+function loadTimes(date){
+
+
+    timeGrid.innerHTML="";
+
+
+    const times =
+    availability[date];
+
+
+    if(!times){
+
+        timeGrid.innerHTML =
+        "<p>No available times.</p>";
+
+        return;
+
+    }
+
+
+
+    times.forEach(time=>{
+
+
+        const button =
+        document.createElement(
+            "button"
+        );
+
+
+        button.type="button";
+
+
+        button.className =
+        "time-btn";
+
+
+        button.textContent =
+        time;
+
+
+
+        button.addEventListener(
+            "click",
+            ()=>{
+
+
+                document
+                .querySelectorAll(
+                    ".time-btn"
+                )
+                .forEach(btn=>{
+                    btn.classList.remove(
+                        "active"
+                    );
+                });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+            }
+        );
+
+
+        timeGrid.appendChild(button);
+
+
+    });
+
+
+}
+
+
+
+
+/*
+    Previous month
+*/
+
+prevMonth.addEventListener(
+    "click",
+    ()=>{
+
+
+        currentMonth--;
+
+
+        if(currentMonth===0){
+
+            currentMonth=12;
+
+            currentYear--;
+
+        }
+
+
+        generateCalendar();
+
+
+    }
+);
+
+
+
+
+/*
+    Next month
+*/
+
+nextMonth.addEventListener(
+    "click",
+    ()=>{
+
+
+        currentMonth++;
+
+
+        if(currentMonth===13){
+
+            currentMonth=1;
+
+            currentYear++;
+
+        }
+
+
+        generateCalendar();
+
+
+    }
+);
+
+
+
+
+generateCalendar();

@@ -687,11 +687,6 @@ footer{
 }
 
 @media(max-width:1230px){
-    
-    /* show hamburger icon */
-    .hamburger{
-        display:block;
-    }
 
     .lessons-menu{
         position:static;
@@ -730,6 +725,10 @@ footer{
     /* make navbar the positioning context */
     .navbar-content{
         position:relative;
+    }
+
+    .nav-logo img{
+        width:75px;
     }
 
     /* center BOTH welcomes */
