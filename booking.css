@@ -1338,7 +1338,6 @@ footer{
         padding:20px;
     }
 
-    .level-grid,
     .goal-grid{    
         grid-template-columns:1fr;
     }

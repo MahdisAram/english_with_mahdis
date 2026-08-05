@@ -1,3 +1,11 @@
+const SUPABASE_URL = "https://pmroefvktvgujgtkjxtn.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R1U96jzlorvCDQwWIRcbwg_994ysgkc";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
 // HAMBURGER MENU
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.getElementById("nav-links");
@@ -73,57 +81,10 @@ readMoreButtons.forEach((button) => {
     });
 });
 
-// SELECT PREFERRED DAYS
-const dayButtons =
-document.querySelectorAll(".day-btn");
-let selectedDays = [];
-
-dayButtons.forEach(button=>{
-    button.addEventListener("click",()=>{
-        button.classList.toggle("active");
-
-        const day = button.textContent.trim();
-
-        if(selectedDays.includes(day)){
-            selectedDays =
-            selectedDays.filter(
-                item => item !== day
-            );
-        }
-        else{
-            selectedDays.push(day);
-        }
-        console.log(
-            "Selected days:",
-            selectedDays
-        );
-    });
-});
-
-// SELECT PREFERRED TIME
-const timeButtons =
-document.querySelectorAll(".time-btn");
-let selectedTime = "";
-
-timeButtons.forEach(button=>{
-    button.addEventListener("click",()=>{
-        timeButtons.forEach(btn=>{
-            btn.classList.remove("active");
-        });
-        button.classList.add("active");
-        selectedTime =
-        button.textContent.trim();
-        console.log(
-            "Selected time:",
-            selectedTime
-        );
-    });
-});
-
 // RADIO CARD EFFECTS
 const radioOptions =
 document.querySelectorAll(
-".level-option input, .goal-option input"
+".goal-option input"
 );
 
 radioOptions.forEach(radio=>{
@@ -162,122 +123,153 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // FORM SUBMISSION
-const bookingForm =
-document.querySelector(".booking-form");
+const bookingForm = document.getElementById("bookingForm");
+if (bookingForm) {
+    bookingForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        // --------------------------------
+        // BASIC FORM VALIDATION
+        // --------------------------------
+        const fullNameInput =
+            document.getElementById("fullName");
+        const emailInput =
+            document.getElementById("email");
+        const phoneInput =
+            document.getElementById("phone");
+        const ageInput =
+            bookingForm.querySelector('input[type="number"]');
+        const selectedGoal =
+            document.querySelector(
+                'input[name="goal"]:checked'
+            );
+        const notesInput =
+            bookingForm.querySelector("textarea");
+        let valid = true;
 
-if(bookingForm){
-bookingForm.addEventListener(
-"submit",
-function(event){
-    event.preventDefault();
-
-    const requiredInputs =
-    bookingForm.querySelectorAll(
-        "input[required]"
-    );
-    let valid = true;
-
-    requiredInputs.forEach(input=>{
-        if(input.value.trim()===""){
-            valid=false;
-            input.style.borderColor=
-            "var(--red)";
+        // Check text inputs
+        [
+            fullNameInput,
+            emailInput,
+            phoneInput
+        ].forEach(input => {
+            if (input.value.trim() === "") {
+                valid = false;
+                input.style.borderColor =
+                    "var(--red)";
+            } else {
+                input.style.borderColor =
+                    "black";
+            }
+        });
+        // Check goal
+        if (!selectedGoal) {
+            valid = false;
         }
-        else{
-            input.style.borderColor=
-            "black";
+        // Check date
+        if (!selectedDate) {
+            valid = false;
         }
-    });
+        // Check time
+        if (!selectedTime) {
+            valid = false;
+        }
+        if (!valid) {
+            alert(
+                "لطفاً تمام بخش‌های ضروری فرم را تکمیل کنید."
+            );
+            return;
+        }
 
-    const selectedLevel =
-    document.querySelector(
-        'input[name="level"]:checked'
-    );
-    const selectedGoal =
-    document.querySelector(
-        'input[name="goal"]:checked'
-    );
-
-    if(!selectedLevel){
-        valid=false;
-    }
-    if(!selectedGoal){
-        valid=false;
-    }
-
-    if(selectedDays.length===0){
-        valid=false;
-    }
-    if(selectedTime===""){
-        valid=false;
-    }
-    if(!valid){
-        alert(
-        "لطفاً تمام بخش‌های ضروری فرم را تکمیل کنید."
+        // --------------------------------
+        // CONVERT JALALI DATE → GREGORIAN
+        // --------------------------------
+        const [
+            jalaliYear,
+            jalaliMonth,
+            jalaliDay
+        ] = selectedDate
+            .split("-")
+            .map(Number);
+        const gregorianDate =
+            jalaali.toGregorian(
+                jalaliYear,
+                jalaliMonth,
+                jalaliDay
+            );
+        const bookingDate =
+            `${gregorianDate.gy}-${String(gregorianDate.gm).padStart(2, "0")}-${String(gregorianDate.gd).padStart(2, "0")}`;
+        
+        // --------------------------------
+        // CREATE BOOKING OBJECT
+        // --------------------------------
+        const bookingData = {
+            full_name:
+                fullNameInput.value.trim(),
+            email:
+                emailInput.value.trim(),
+            phone:
+                phoneInput.value.trim(),
+            age:
+                ageInput.value
+                    ? Number(ageInput.value)
+                    : null,
+            goal:
+                selectedGoal.value,
+            booking_date:
+                bookingDate,
+            booking_time:
+                selectedTime,
+            notes:
+                notesInput.value.trim() || null,
+            status:
+                "pending"
+        };
+        console.log(
+            "Sending booking:",
+            bookingData
         );
-        return;
-    }
 
-    const formData = {
-        name:
-        bookingForm
-        .querySelector(
-        'input[type="text"]'
-        )
-        .value,
-        email:
-        bookingForm
-        .querySelector(
-        'input[type="email"]'
-        )
-        .value,
-        phone:
-        bookingForm
-        .querySelector(
-        'input[type="tel"]'
-        )
-        .value,
-        age:
-        bookingForm
-        .querySelector(
-        'input[type="number"]'
-        )
-        .value,
-        level:
-        selectedLevel.value,
-        goal:
-        selectedGoal.value,
-        days:
-        selectedDays,
-        time:
-        selectedTime,
-        notes:
-        bookingForm
-        .querySelector("textarea")
-        .value
-    };
+        // --------------------------------
+        // SEND TO SUPABASE
+        // --------------------------------
+        const { error } =
+            await supabaseClient
+                .from("bookings")
+                .insert([bookingData]);
 
-    console.log(
-        "Booking request:",
-        formData
-    );
-    alert(
-    "درخواست شما با موفقیت ثبت شد. به زودی با شما تماس خواهم گرفت."
-    );
-    bookingForm.reset();
-
-    dayButtons.forEach(button=>{
-        button.classList.remove("active");
+        // --------------------------------
+        // HANDLE ERROR
+        // --------------------------------
+        if (error) {
+            console.error(
+                "Booking submission error:",
+                error
+            );
+            alert(
+                "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید."
+            );
+            return;
+        }
+        // --------------------------------
+        // SUCCESS
+        // --------------------------------
+        alert(
+            "درخواست شما با موفقیت ثبت شد. به زودی با شما تماس خواهم گرفت."
+        );
+        // Reset form
+        bookingForm.reset();
+        // Reset calendar selection
+        selectedDate = null;
+        selectedTime = null;
+        document
+            .querySelectorAll(".calendar-day")
+            .forEach(button => {
+                button.classList.remove("active");
+            });
+        timeGrid.innerHTML =
+            "<p>لطفاً ابتدا تاریخ را انتخاب کنید.</p>";
     });
-    timeButtons.forEach(button=>{
-        button.classList.remove("active");
-    });
-
-    selectedDays=[];
-    selectedTime="";
-});
 }
-
 
 /* ==========================
    PERSIAN (JALALI) CALENDAR
@@ -293,43 +285,8 @@ let today = jalaali.toJalaali(new Date());
 let currentYear = today.jy;
 let currentMonth = today.jm;
 let selectedDate = null;
-
-/*
-    Available class times
-
-    Format:
-
-    "Jalali Year-Month-Day"
-
-*/
-const availability = {
-    "1405-05-15": [
-        "09:00",
-        "11:00",
-        "15:00"
-    ],
-
-    "1405-05-18": [
-        "14:00",
-        "17:00"
-    ],
-
-    "1405-05-22": [
-        "10:00",
-        "12:00",
-        "18:00"
-    ],
-
-    "1405-06-02": [
-        "09:00",
-        "13:00"
-    ],
-
-    "1405-06-10": [
-        "11:00",
-        "16:00"
-    ]
-};
+let availability = {};
+let selectedTime = "";
 
 /*
     Convert numbers into Persian format
@@ -373,6 +330,54 @@ function formatJalaliDate(year,month,day){
         "-" +
         String(day).padStart(2,"0")
     );
+}
+
+async function loadAvailability() {
+    const { data, error } = await supabaseClient
+        .from("available_slots")
+        .select("booking_date, booking_time")
+        .eq("is_available", true)
+        .order("booking_date")
+        .order("booking_time");
+    if (error) {
+        console.error(
+            "Could not load available slots:",
+            error
+        );
+        timeGrid.innerHTML =
+            "<p>خطا در دریافت زمان‌های موجود.</p>";
+        return;
+    }
+    availability = {};
+    data.forEach(slot => {
+        // Convert database date into a JavaScript Date
+        const [year, month, day] =
+            slot.booking_date
+            .split("-")
+            .map(Number);
+        // Convert Gregorian → Jalali
+        const jalaliDate =
+            jalaali.toJalaali(
+                year,
+                month,
+                day
+            );
+        const dateKey =
+            formatJalaliDate(
+                jalaliDate.jy,
+                jalaliDate.jm,
+                jalaliDate.jd
+            );
+        
+        if (!availability[dateKey]) {
+            availability[dateKey] = [];
+        }
+        // Supabase time may come back as "17:00:00"
+        const time =
+            slot.booking_time.substring(0, 5);
+        availability[dateKey].push(time);
+    });
+    generateCalendar();
 }
 
 function generateCalendar(){
@@ -440,12 +445,10 @@ function generateCalendar(){
     ){
         const button =
             document.createElement("button");
-        
         button.className =
         "calendar-day";
         button.textContent =
         persianNumber(day);
-
         const dateKey =
         formatJalaliDate(
             currentYear,
@@ -477,30 +480,21 @@ function generateCalendar(){
                 "disabled"
             );
         }
-
-        button.addEventListener(
-            "click",
-            ()=>{
-                if(
-                    !availability[dateKey]
-                )
+        button.addEventListener("click", () => {
+            if (!availability[dateKey]) {
                 return;
-                document
-                .querySelectorAll(
-                    ".calendar-day"
-                )
-                .forEach(btn=>{
-                    btn.classList.remove(
-                        "active"
-                    );
-                });
-                button.classList.add(
-                    "active"
-                );
-                selectedDate=dateKey;
-                loadTimes(dateKey);
             }
-        );
+            document
+                .querySelectorAll(".calendar-day")
+                .forEach(btn => {
+                    btn.classList.remove("active");
+                });
+            button.classList.add("active");
+            selectedDate = dateKey;
+            // Reset previously selected time
+            selectedTime = "";
+            loadTimes(dateKey);
+        });
         calendarGrid.appendChild(button);
     }
 }
@@ -536,41 +530,31 @@ function isPastDate(
 /*
     Generate available times
 */
-function loadTimes(date){
-    timeGrid.innerHTML="";
-    const times =
-    availability[date];
-    if(!times){
+function loadTimes(date) {
+    timeGrid.innerHTML = "";
+    const times = availability[date];
+
+    if (!times || times.length === 0) {
         timeGrid.innerHTML =
-        "<p>No available times.</p>";
+            "<p>برای این تاریخ زمانی موجود نیست.</p>";
         return;
     }
-
-    times.forEach(time=>{
+    times.forEach(time => {
         const button =
-        document.createElement(
-            "button"
-        );
-        button.type="button";
-        button.className =
-        "time-btn";
-        button.textContent =
-        time;
+            document.createElement("button");
+        button.type = "button";
+        button.className = "time-btn";
+        button.textContent = time;
         button.addEventListener(
             "click",
-            ()=>{
+            () => {
                 document
-                .querySelectorAll(
-                    ".time-btn"
-                )
-                .forEach(btn=>{
-                    btn.classList.remove(
-                        "active"
-                    );
-                });
-                button.classList.add(
-                    "active"
-                );
+                    .querySelectorAll(".time-btn")
+                    .forEach(btn => {
+                        btn.classList.remove("active");
+                    });
+                button.classList.add("active");
+                selectedTime = time;
             }
         );
         timeGrid.appendChild(button);
@@ -607,4 +591,4 @@ nextMonth.addEventListener(
     }
 );
 
-generateCalendar();
+loadAvailability();

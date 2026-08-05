@@ -226,6 +226,7 @@
                             </label>
                             <input
                                 type="number"
+                                name="age"
                                 min="6"
                                 max="99"
                                 placeholder="سن شما">
@@ -245,21 +246,21 @@
                     </p>
                     <div class="goal-grid">
                         <label class="goal-option">
-                            <input name="goal" id="goal" value="general" required>
+                            <input type="radio" name="goal" id="goal-general" value="general" required>
                             <span>
                                 <i class="fa-solid fa-earth-americas"></i>
                                 General English
                             </span>
                         </label>
                         <label class="goal-option">
-                            <input name="goal" id="goal" value="conversation" required>
+                            <input type="radio" name="goal" id="goal-conversation" value="conversation" required>
                             <span>
                                 <i class="fa-solid fa-comments"></i>
                                 Conversation
                             </span>
                         </label>
                         <label class="goal-option">
-                            <input name="goal" id="goal" value="IELTS" required>
+                            <input type="radio" name="goal" id="goal-ielts" value="IELTS" required>
                             <span>
                                 <i class="fa-solid fa-medal"></i>
                                 IELTS
@@ -390,6 +391,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- My JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
