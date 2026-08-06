@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+        <title>Admin Login | English With Mahdis</title>
+        <!-- Vazirmatn -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com">
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap"
+            rel="stylesheet">
+        <!-- Ms Madi -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com">
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap"
+            rel="stylesheet">
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link
+            rel="stylesheet"
+            href="admin-login.css">
+    </head>
+
+    <body>
+        <main class="login-page">
+            <div class="login-card">
+                <div class="login-logo">
+                    <img
+                        src="images/logo.png"
+                        alt="English With Mahdis"
+                    >
+                </div>
+                <h1>
+                    English With Mahdis
+                </h1>
+                <h2>
+                    ورود به پنل مدیریت
+                </h2>
+                <p class="login-description">
+                    برای مدیریت درخواست‌های رزرو، وارد حساب مدیریت شوید.
+                </p>
+                <form id="admin-login-form">
+                    <div class="input-group">
+                        <label for="email">
+                            ایمیل
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="ایمیل مدیریت"
+                                autocomplete="email"
+                                required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">
+                            رمز عبور
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="رمز عبور"
+                                autocomplete="current-password"
+                                required>
+                            <button
+                                type="button"
+                                id="toggle-password"
+                                class="password-toggle"
+                                aria-label="نمایش رمز عبور">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p
+                        id="login-error"
+                        class="login-error"
+                        aria-live="polite"
+                    ></p>
+                    <button
+                        type="submit"
+                        id="login-btn"
+                        class="login-btn">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        ورود به پنل
+                    </button>
+                </form>
+            </div>
+        </main>
+
+        <!-- Supabase -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="admin-login.js"></script>
+    </body>
+</html>
