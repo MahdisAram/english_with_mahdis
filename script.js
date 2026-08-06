@@ -230,26 +230,111 @@ if (bookingForm) {
         );
 
         // --------------------------------
-        // SEND TO SUPABASE
+        // SEND BOOKING TO SUPABASE
         // --------------------------------
-        const { error } =
-            await supabaseClient
-                .from("bookings")
-                .insert([bookingData]);
+        const { error: bookingError } =
+        await supabaseClient
+            .from("bookings")
+            .insert([bookingData]);
 
         // --------------------------------
-        // HANDLE ERROR
+        // HANDLE BOOKING ERROR
         // --------------------------------
-        if (error) {
-            console.error(
-                "Booking submission error:",
-                error
+        if (bookingError) {
+        console.error(
+            "Booking submission error:",
+            bookingError
+        );
+        if (bookingError.code === "23505") {
+            alert(
+                "متأسفانه این زمان توسط زبان‌آموز دیگری رزرو شده است. لطفاً زمان دیگری انتخاب کنید."
             );
+        } else {
             alert(
                 "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید."
             );
+        }
+        return;
+        }
+        // --------------------------------
+        // FIND AND MARK SLOT AS UNAVAILABLE
+        // --------------------------------
+
+        console.log("Looking for slot:");
+        console.log("bookingDate:", bookingDate);
+        console.log("selectedTime:", selectedTime);
+
+        const { data: matchingSlots, error: findSlotError } =
+            await supabaseClient
+                .from("available_slots")
+                .select("booking_date, booking_time, is_available")
+                .eq("booking_date", bookingDate);
+
+        console.log("Slots on this date:", matchingSlots);
+        console.log("Find slot error:", findSlotError);
+
+        if (findSlotError) {
+            console.error("Could not find available slot:", findSlotError);
+            alert("خطا در بررسی زمان انتخاب‌شده.");
             return;
         }
+
+        // Find the exact time.
+        // Database returns "14:20:00"
+        // selectedTime is "14:20"
+        const matchingSlot = matchingSlots.find(
+            slot => slot.booking_time.substring(0, 5) === selectedTime
+        );
+
+        console.log("Matching slot:", matchingSlot);
+
+        if (!matchingSlot) {
+            console.error("No matching slot found.");
+            alert("زمان انتخاب‌شده دیگر در دسترس نیست.");
+            return;
+        }
+
+        // --------------------------------
+        // MARK SLOT AS UNAVAILABLE
+        // --------------------------------
+
+        console.log("Attempting to disable slot:");
+        console.log("Date:", bookingDate);
+        console.log("Time:", matchingSlot.booking_time);
+
+        const { data: updatedSlot, error: slotUpdateError } =
+            await supabaseClient
+                .from("available_slots")
+                .update({
+                    is_available: false
+                })
+                .eq("booking_date", bookingDate)
+                .eq("booking_time", matchingSlot.booking_time)
+                .select();
+
+        console.log("Updated slot:", updatedSlot);
+        console.log("Slot update error:", slotUpdateError);
+
+        // Supabase can return no error but update ZERO rows.
+        // Therefore we must check updatedSlot.length too.
+        if (slotUpdateError || !updatedSlot || updatedSlot.length === 0) {
+
+            console.error(
+                "Slot was NOT updated.",
+                {
+                    error: slotUpdateError,
+                    updatedRows: updatedSlot
+                }
+            );
+
+            alert(
+                "رزرو ثبت شد، اما زمان انتخاب‌شده از لیست زمان‌های موجود حذف نشد."
+            );
+
+            return;
+        }
+
+        console.log("SUCCESS: Slot is now unavailable.");
         // --------------------------------
         // SUCCESS
         // --------------------------------
@@ -258,9 +343,10 @@ if (bookingForm) {
         );
         // Reset form
         bookingForm.reset();
+        await loadAvailability();
         // Reset calendar selection
         selectedDate = null;
-        selectedTime = null;
+        selectedTime = "";
         document
             .querySelectorAll(".calendar-day")
             .forEach(button => {
@@ -287,6 +373,11 @@ let currentMonth = today.jm;
 let selectedDate = null;
 let availability = {};
 let selectedTime = "";
+
+document
+    .querySelectorAll(".time-btn")
+    .forEach(btn => btn.remove());
+timeGrid.innerHTML = "<p>لطفاً ابتدا تاریخ را انتخاب کنید.</p>";
 
 /*
     Convert numbers into Persian format

@@ -279,12 +279,12 @@
                     <p class="section-description">
                         ابتدا ماه مورد نظر را انتخاب کنید، سپس روز و ساعت مناسب خود را مشخص نمایید.
                     </p>
+                    <!-- <input type="hidden" id="selectedDateInput"> -->
             
                     <div class="calendar-header">
                         <button type="button" class="month-btn" id="prevMonth">
                             <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                    
+                        </button>                    
                         <h3 id="month-name"></h3>
                     
                         <button type="button" class="month-btn" id="nextMonth">
@@ -309,6 +309,7 @@
                         <div class="time-grid" id="timeGrid">
                             <p>لطفاً ابتدا تاریخ را انتخاب کنید.
                             </p>
+                            <!-- <input type="hidden" id="selectedTimeInput"> -->
                         </div>
                     </div>
                 </div>
@@ -321,6 +322,8 @@
                 </div>
                 <div class="card-body">
                     <textarea
+                        id="notes"
+                        name="notes"
                         rows="8"
                         placeholder="اگر توضیح، سؤال یا درخواست خاصی دارید، اینجا بنویسید..."></textarea>
                 </div>
