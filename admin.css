@@ -1,0 +1,676 @@
+:root{
+    --green: #155F5A;
+    --red: #C0124F;
+    --yellow: #F1BE40;
+    --creme: #ede1d3;
+    --caramel: #a89e92;
+    --red-hover: #e67099;
+    --background: #F7F6F2;
+    --white: #FFFFFF;
+    --text: #333333;
+    --muted: #777777;
+    --border: #000000;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Vazirmatn", Arial, Helvetica, sans-serif;
+    line-height:1.8;
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(21,95,90,.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 8% 90%,
+            rgba(192,18,79,.08),
+            transparent 30%
+        ),
+        var(--background);
+    color:var(--text);
+    direction:rtl;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:"Vazirmatn", Arial, Helvetica, sans-serif;
+}
+
+/* ===============================
+    ADMIN HEADER
+   =============================== */
+.admin-header {
+    background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--red)
+    );
+    color: var(--white);
+    padding: 22px 50px;
+    border-bottom: 4px solid var(--border);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.admin-brand{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:22px;
+    direction:ltr;
+}
+
+/* Left side: logo + English title */
+.admin-brand-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    direction:ltr;
+    text-align:left;
+}
+
+/* Right side: Persian subtitle */
+.admin-brand-right{
+    direction:rtl;
+    text-align:right;
+    text-align:right;
+}
+
+.admin-brand img{
+    width:85px;
+    height:85px;
+    object-fit:contain;
+    padding:8px;
+}
+
+.admin-brand h1{
+    color:var(--creme);
+    font-size:2rem;
+    font-weight:900;
+    line-height:1.3;
+    margin-bottom:0;
+}
+
+.admin-brand h1{
+    font-family:"Ms Madi", cursive;
+    font-size:3rem;
+    color:var(--creme);
+    line-height:1;
+    white-space:nowrap;
+    transition:.3s;
+}
+
+.admin-brand p{
+    color:var(--creme);
+    /* color:rgba(255,255,255,.88); */
+    font-size:1.8rem;
+    font-weight:400;
+}
+
+
+/* ===============================
+    DASHBOARD LAYOUT
+   =============================== */
+
+.dashboard-container{
+    width:100%;
+    max-width:1250px;
+    margin:0 auto;
+    padding:55px 35px 80px;
+}
+
+/* ===============================
+   STATS CARDS
+   =============================== */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:25px;
+    margin-bottom:55px;
+}
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+    min-height:150px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    background:var(--white);
+    border:4px solid var(--border);
+    border-radius:14px;
+    padding:25px;
+    box-shadow:
+        8px 8px 0 var(--caramel),
+        0 16px 30px rgba(0,0,0,.10);
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.stat-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(21,95,90,.08),
+            rgba(192,18,79,.05)
+        );
+    pointer-events:none;
+}
+
+.stat-card:hover{
+    transform:translateY(-7px);
+    box-shadow:
+        11px 11px 0 var(--green),
+        0 20px 35px rgba(0,0,0,.14);
+}
+
+.stat-card i{
+    position:relative;
+    z-index:1;
+    width:58px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    background:var(--green);
+    color:var(--white);
+    border:3px solid var(--border);
+    border-radius:12px;
+    font-size:1.55rem;
+}
+
+.stat-card div{
+    position:relative;
+    z-index:1;
+}
+
+.stat-card h3{
+    color:var(--green);
+    font-size:1rem;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.stat-card span{
+    display:block;
+    color:var(--text);
+    font-size:2.2rem;
+    font-weight:900;
+    line-height:1;
+}
+
+/* Card color variations */
+
+.stat-card.green i{
+    background:var(--green);
+}
+
+.stat-card.green:hover{
+    box-shadow:
+        11px 11px 0 var(--green),
+        0 20px 35px rgba(0,0,0,.14);
+}
+
+.stat-card.red i{
+    background:var(--red);
+}
+
+.stat-card.red:hover{
+    box-shadow:
+        11px 11px 0 var(--red),
+        0 20px 35px rgba(0,0,0,.14);
+}
+
+.stat-card.yellow i{
+    background:var(--yellow);
+    color:#000;
+}
+
+.stat-card.yellow:hover{
+    box-shadow:
+        11px 11px 0 var(--yellow),
+        0 20px 35px rgba(0,0,0,.14);
+}
+
+/* Cancelled card default style */
+
+.stat-card:not(.green):not(.red):not(.yellow) i{
+    background:var(--text);
+}
+
+/* ===============================
+   BOOKINGS SECTION
+   =============================== */
+
+.bookings-section{
+    background:var(--creme);
+    border:4px solid var(--border);
+    border-radius:16px;
+    padding:35px;
+    box-shadow:
+        10px 10px 0 var(--green),
+        0 20px 40px rgba(0,0,0,.12);
+}
+
+.bookings-section h2{
+    position:relative;
+    color:var(--green);
+    text-align:center;
+    font-size:2rem;
+    font-weight:900;
+    margin-bottom:35px;
+}
+
+.bookings-section h2::after{
+    content:"";
+    display:block;
+    width:90px;
+    height:4px;
+    background:var(--red);
+    margin:14px auto 0;
+    border-radius:50px;
+}
+
+/* ===============================
+   TABLE
+   =============================== */
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+    background:var(--white);
+    border:3px solid var(--border);
+    border-radius:12px;
+    box-shadow:0 14px 28px rgba(0,0,0,.10);
+}
+
+table{
+    width:100%;
+    min-width:950px;
+    border-collapse:collapse;
+    text-align:center;
+    direction:rtl;
+}
+
+thead{
+    background:linear-gradient(
+        135deg,
+        var(--green),
+        var(--red)
+    );
+    color:var(--white);
+}
+
+th{
+    padding:18px 14px;
+    font-size:.95rem;
+    font-weight:800;
+    white-space:nowrap;
+    border-left:1px solid rgba(255,255,255,.18);
+}
+
+th:last-child{
+    border-left:none;
+}
+
+tbody tr{
+    background:var(--white);
+    transition:.25s ease;
+}
+
+tbody tr:nth-child(even){
+    background:#faf7f3;
+}
+
+tbody tr:hover{
+    background:rgba(241,190,64,.18);
+}
+
+td{
+    padding:16px 14px;
+    font-size:.95rem;
+    border-bottom:1px solid rgba(0,0,0,.10);
+    color:var(--text);
+    vertical-align:middle;
+}
+
+tbody tr:last-child td{
+    border-bottom:none;
+}
+
+td[colspan]{
+    padding:35px 15px;
+    color:var(--muted);
+    font-weight:700;
+}
+
+/* ===============================
+   STATUS BADGES
+   These are useful if your JS adds classes.
+   Example:
+   <span class="status-badge pending">در انتظار بررسی</span>
+   =============================== */
+
+.status-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:95px;
+    padding:7px 12px;
+    border:2px solid var(--border);
+    border-radius:50px;
+    font-size:.82rem;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.status-badge.pending,
+.badge-pending{
+    background:var(--yellow);
+    color:#000;
+}
+
+.status-badge.confirmed,
+.badge-confirmed{
+    background:var(--green);
+    color:var(--white);
+}
+
+.status-badge.cancelled,
+.badge-cancelled{
+    background:var(--red);
+    color:var(--white);
+}
+
+/* ===============================
+   ACTION BUTTONS
+   These are useful if your admin.js creates buttons.
+   =============================== */
+
+.action-buttons{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.action-btn,
+.confirm-btn,
+.cancel-btn,
+.delete-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:8px 12px;
+    border:2px solid var(--border);
+    border-radius:8px;
+    font-family:"Vazirmatn", sans-serif;
+    font-size:.82rem;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s ease;
+}
+
+.action-btn:hover,
+.confirm-btn:hover,
+.cancel-btn:hover,
+.delete-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 15px rgba(0,0,0,.16);
+}
+
+.confirm-btn{
+    background:var(--green);
+    color:var(--white);
+}
+
+.cancel-btn{
+    background:var(--yellow);
+    color:#000;
+}
+
+.delete-btn{
+    background:var(--red);
+    color:var(--white);
+}
+
+.action-btn:disabled,
+.confirm-btn:disabled,
+.cancel-btn:disabled,
+.delete-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+}
+
+/* ===============================
+   OPTIONAL FORM ELEMENTS
+   If you later add filters/search.
+   =============================== */
+
+.dashboard-controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.dashboard-controls input,
+.dashboard-controls select{
+    min-height:48px;
+    padding:10px 15px;
+    background:var(--background);
+    color:var(--text);
+    border:3px solid var(--border);
+    border-radius:9px;
+    outline:none;
+    font-size:.95rem;
+}
+
+.dashboard-controls input:focus,
+.dashboard-controls select:focus{
+    border-color:var(--red);
+}
+
+/* ===============================
+   SCROLLBAR STYLE
+   =============================== */
+
+.table-wrapper::-webkit-scrollbar{
+    height:10px;
+}
+
+.table-wrapper::-webkit-scrollbar-track{
+    background:#eadccc;
+    border-radius:50px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb{
+    background:var(--green);
+    border-radius:50px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover{
+    background:var(--red);
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media(max-width:1100px){
+
+    .stats-grid{
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+    .admin-header{
+        padding:22px 30px;
+    }
+
+    .dashboard-container{
+        padding:45px 25px 70px;
+    }
+}
+
+@media(max-width:830px){
+
+    .admin-header{
+        padding:20px;
+    }
+
+    .admin-brand{
+        flex-direction:column;
+        justify-content:center;
+        text-align:center;
+        gap:14px;
+        direction:ltr;
+    }
+
+    .admin-brand-left{
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        gap:10px;
+    }
+
+    .admin-brand-left h1{
+        display:none;
+    }
+
+    .admin-brand-right{
+        text-align:center;
+    }
+
+    .admin-brand img{
+        width:78px;
+        height:78px;
+    }
+
+    .admin-brand h1{
+        font-size:1.55rem;
+    }
+
+    .admin-brand p{
+        font-size:1.5rem;
+    }
+
+    .dashboard-container{
+        padding:35px 18px 55px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+        margin-bottom:40px;
+    }
+
+    .stat-card{
+        min-height:130px;
+        padding:22px;
+    }
+
+    .stat-card span{
+        font-size:2rem;
+    }
+
+    .bookings-section{
+        padding:25px 18px;
+        border-width:3px;
+        box-shadow:
+            7px 7px 0 var(--green),
+            0 15px 30px rgba(0,0,0,.10);
+    }
+
+    .bookings-section h2{
+        font-size:1.55rem;
+        margin-bottom:28px;
+    }
+
+    th,
+    td{
+        padding:14px 12px;
+        font-size:.88rem;
+    }
+}
+
+@media(max-width:430px){
+
+    .admin-brand h1{
+        font-size:1.3rem;
+    }
+
+    .admin-brand p{
+        font-size:1.5rem;
+    }
+
+    .dashboard-container{
+        padding:28px 14px 45px;
+    }
+
+    .stat-card{
+        gap:14px;
+        padding:18px;
+        border-width:3px;
+        box-shadow:
+            6px 6px 0 var(--caramel),
+            0 12px 25px rgba(0,0,0,.09);
+    }
+
+    .stat-card i{
+        width:50px;
+        height:50px;
+        font-size:1.3rem;
+    }
+
+    .stat-card h3{
+        font-size:.9rem;
+    }
+
+    .stat-card span{
+        font-size:1.8rem;
+    }
+
+    .bookings-section{
+        padding:22px 14px;
+    }
+
+    .bookings-section h2{
+        font-size:1.35rem;
+    }
+
+    table{
+        min-width:850px;
+    }
+}

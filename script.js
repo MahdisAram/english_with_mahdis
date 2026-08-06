@@ -245,28 +245,47 @@ if (bookingForm) {
             "Sending booking:",
             bookingData
         );
-
         // --------------------------------
-        // SEND BOOKING TO SUPABASE
+        // CREATE BOOKING USING DATABASE FUNCTION
         // --------------------------------
-        const { error: bookingError } =
-        await supabaseClient
-            .from("bookings")
-            .insert([bookingData]);
-
-        // --------------------------------
-        // HANDLE BOOKING ERROR
-        // --------------------------------
+        const { data: bookingResult, error: bookingError } =
+        await supabaseClient.rpc(
+            "create_booking",
+            {
+                p_full_name: fullNameInput.value.trim(),
+                p_email: emailInput.value.trim(),
+                p_phone: phoneInput.value.trim(),
+                p_age: ageInput.value
+                    ? Number(ageInput.value)
+                    : null,
+                p_goal: selectedGoal.value,
+                p_booking_date: bookingDate,
+                p_booking_time: selectedTime,
+                p_notes: notesInput.value.trim() || null
+            }
+        );
+        console.log("Booking result:", bookingResult);
+        console.log("Booking error:", bookingError);
         if (bookingError) {
         console.error(
             "Booking submission error:",
             bookingError
         );
-        if (bookingError.code === "23505") {
+        if (
+            bookingError.message.includes("SLOT_UNAVAILABLE")
+        ) {
             alert(
                 "متأسفانه این زمان توسط زبان‌آموز دیگری رزرو شده است. لطفاً زمان دیگری انتخاب کنید."
             );
-        } else {
+        }
+        else if (
+            bookingError.message.includes("BOOKING_ALREADY_EXISTS")
+        ) {
+            alert(
+                "این درخواست قبلاً ثبت شده است."
+            );
+        }
+        else {
             alert(
                 "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید."
             );
@@ -275,90 +294,6 @@ if (bookingForm) {
         submitButton.innerHTML = originalButtonHTML;
         return;
         }
-        // --------------------------------
-        // FIND AND MARK SLOT AS UNAVAILABLE
-        // --------------------------------
-
-        console.log("Looking for slot:");
-        console.log("bookingDate:", bookingDate);
-        console.log("selectedTime:", selectedTime);
-
-        const { data: matchingSlots, error: findSlotError } =
-            await supabaseClient
-                .from("available_slots")
-                .select("booking_date, booking_time, is_available")
-                .eq("booking_date", bookingDate);
-
-        console.log("Slots on this date:", matchingSlots);
-        console.log("Find slot error:", findSlotError);
-
-        if (findSlotError) {
-            console.error("Could not find available slot:", findSlotError);
-            alert("خطا در بررسی زمان انتخاب‌شده.");
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonHTML;
-            return;
-        }
-
-        // Find the exact time.
-        // Database returns "14:20:00"
-        // selectedTime is "14:20"
-        const matchingSlot = matchingSlots.find(
-            slot => slot.booking_time.substring(0, 5) === selectedTime
-        );
-
-        console.log("Matching slot:", matchingSlot);
-
-        if (!matchingSlot) {
-            console.error("No matching slot found.");
-            alert("زمان انتخاب‌شده دیگر در دسترس نیست.");
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonHTML;
-            return;
-        }
-
-        // --------------------------------
-        // MARK SLOT AS UNAVAILABLE
-        // --------------------------------
-
-        console.log("Attempting to disable slot:");
-        console.log("Date:", bookingDate);
-        console.log("Time:", matchingSlot.booking_time);
-
-        const { data: updatedSlot, error: slotUpdateError } =
-            await supabaseClient
-                .from("available_slots")
-                .update({
-                    is_available: false
-                })
-                .eq("booking_date", bookingDate)
-                .eq("booking_time", matchingSlot.booking_time)
-                .select();
-
-        console.log("Updated slot:", updatedSlot);
-        console.log("Slot update error:", slotUpdateError);
-
-        // Supabase can return no error but update ZERO rows.
-        // Therefore we must check updatedSlot.length too.
-        if (slotUpdateError || !updatedSlot || updatedSlot.length === 0) {
-
-            console.error(
-                "Slot was NOT updated.",
-                {
-                    error: slotUpdateError,
-                    updatedRows: updatedSlot
-                }
-            );
-
-            alert(
-                "رزرو ثبت شد، اما زمان انتخاب‌شده از لیست زمان‌های موجود حذف نشد."
-            );
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonHTML;
-            return;
-        }
-
-        console.log("SUCCESS: Slot is now unavailable.");
         // --------------------------------
         // SUCCESS
         // --------------------------------

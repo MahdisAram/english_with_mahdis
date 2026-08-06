@@ -747,7 +747,7 @@ textarea:focus{
 }
 
 .goal-grid.error {
-    border: 2px solid var(--red);
+    border: 2px solid var(--red-hover);
     border-radius: 16px;
     padding: 12px;
     background-color: rgba(255, 0, 0, 0.04);

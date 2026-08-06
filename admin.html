@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+        English With Mahdis | Admin Dashboard
+        </title>
+        <link rel="stylesheet" href="admin.css">
+
+        <!-- Vazirmatn -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="
+        https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap
+        " rel="stylesheet">
+
+        <!-- Ms Madi -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap" rel="stylesheet">
+
+        <!-- Font Awesome -->
+        <link
+        rel="stylesheet"
+        href="
+        https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css
+        ">
+    </head>
+
+    <body>
+        <header class="admin-header">
+            <div class="admin-brand">
+                <div class="admin-brand-left">
+                    <img src="images/logo.png">
+                    <h1>
+                    English With Mahdis
+                    </h1>
+                </div>
+                <div class="admin-brand-right">
+                    <p>
+                    پنل مدیریت رزرو کلاس‌ها
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-container">
+            <section class="stats-grid">
+                <div class="stat-card green">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <div>
+                        <h3> کل رزروها </h3>
+                        <span id="totalBookings">0</span>
+                    </div>
+                </div>
+                <div class="stat-card red">
+                    <i class="fa-solid fa-clock"></i>
+                    <div>
+                        <h3>در انتظار بررسی</h3>
+                        <span id="pendingBookings">0</span>
+                    </div>
+                </div>
+                <div class="stat-card yellow">
+                    <i class="fa-solid fa-check"></i>
+                    <div>
+                        <h3>تایید شده</h3>
+                        <span id="confirmedBookings">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-xmark"></i>
+                    <div>
+                        <h3>لغو شده</h3>
+                        <span id="cancelledBookings">0</span>
+                    </div>
+                </div>
+            </section>
+            <section class="bookings-section">
+                <h2>مدیریت درخواست‌های رزرو</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نام</th>
+                                <th>ایمیل</th>
+                                <th>شماره تماس</th>
+                                <th>هدف</th>
+                                <th>تاریخ</th>
+                                <th>ساعت</th>
+                                <th>وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="bookingTable">
+                            <tr>
+                            <td colspan="8">در حال دریافت اطلاعات...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <script src="
+        https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
+        "></script>
+        <script src="admin.js"></script>
+    </body>
+</html>
