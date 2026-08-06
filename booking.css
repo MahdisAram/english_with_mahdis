@@ -746,6 +746,13 @@ textarea:focus{
     color:white;
 }
 
+.goal-grid.error {
+    border: 2px solid var(--red);
+    border-radius: 16px;
+    padding: 12px;
+    background-color: rgba(255, 0, 0, 0.04);
+}
+
 /* DAYS AND TIME */
 .days-grid,
 .time-grid{
@@ -930,6 +937,12 @@ textarea{
     transform:translateY(-5px);
     box-shadow:0 15px 25px rgba(0,0,0,.2);
 }
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 
 /* FAQ */
 .faq-section{

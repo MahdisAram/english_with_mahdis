@@ -93,6 +93,8 @@ radioOptions.forEach(radio=>{
             "Selected:",
             radio.value
         );
+        const goalGrid = document.querySelector(".goal-grid");
+        goalGrid.classList.remove("error");
     });
 });
 
@@ -127,6 +129,9 @@ const bookingForm = document.getElementById("bookingForm");
 if (bookingForm) {
     bookingForm.addEventListener("submit", async function (event) {
         event.preventDefault();
+
+        const submitButton = bookingForm.querySelector(".submit-btn");
+        const originalButtonHTML = submitButton.innerHTML;
         // --------------------------------
         // BASIC FORM VALIDATION
         // --------------------------------
@@ -162,8 +167,13 @@ if (bookingForm) {
             }
         });
         // Check goal
+        const goalGrid = document.querySelector(".goal-grid");
+
         if (!selectedGoal) {
             valid = false;
+            goalGrid.classList.add("error");
+        } else {
+            goalGrid.classList.remove("error");
         }
         // Check date
         if (!selectedDate) {
@@ -179,6 +189,13 @@ if (bookingForm) {
             );
             return;
         }
+        // Prevent duplicate submissions while Supabase is processing
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            در حال ثبت...
+        `;
+
 
         // --------------------------------
         // CONVERT JALALI DATE → GREGORIAN
@@ -254,6 +271,8 @@ if (bookingForm) {
                 "ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید."
             );
         }
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonHTML;
         return;
         }
         // --------------------------------
@@ -276,6 +295,8 @@ if (bookingForm) {
         if (findSlotError) {
             console.error("Could not find available slot:", findSlotError);
             alert("خطا در بررسی زمان انتخاب‌شده.");
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonHTML;
             return;
         }
 
@@ -291,6 +312,8 @@ if (bookingForm) {
         if (!matchingSlot) {
             console.error("No matching slot found.");
             alert("زمان انتخاب‌شده دیگر در دسترس نیست.");
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonHTML;
             return;
         }
 
@@ -330,7 +353,8 @@ if (bookingForm) {
             alert(
                 "رزرو ثبت شد، اما زمان انتخاب‌شده از لیست زمان‌های موجود حذف نشد."
             );
-
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonHTML;
             return;
         }
 
@@ -343,6 +367,9 @@ if (bookingForm) {
         );
         // Reset form
         bookingForm.reset();
+        // Restore the submit button
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonHTML;
         await loadAvailability();
         // Reset calendar selection
         selectedDate = null;
@@ -534,12 +561,11 @@ function generateCalendar(){
         day<=daysInMonth;
         day++
     ){
-        const button =
-            document.createElement("button");
-        button.className =
-        "calendar-day";
-        button.textContent =
-        persianNumber(day);
+        const button = document.createElement("button");
+        button.type = "button"; // IMPORTANT: prevents form submission
+        button.className = "calendar-day";
+        button.textContent = persianNumber(day);
+
         const dateKey =
         formatJalaliDate(
             currentYear,
