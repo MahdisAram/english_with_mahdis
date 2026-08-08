@@ -1057,6 +1057,31 @@ footer{
     margin: 0;
 }
 
+.footer-contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.footer-contact i{
+    color: var(--creme);
+    font-size: 1rem;
+}
+
+.footer-contact a{
+    color: var(--creme);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-contact a:hover{
+    color: var(--red-hover);
+    text-decoration: underline;
+}
+
 /* RESPONSIVE */
 @media(min-width:1451px){
     
@@ -1260,6 +1285,10 @@ footer{
         line-height: 1.8;
     }
 
+    .footer-contact{
+        font-size: .9rem;
+    }
+
     .calendar-grid,
     .weekdays{
         gap:5px;
@@ -1337,6 +1366,15 @@ footer{
 
     .footer-text p{
         font-size:.8rem;
+    }
+
+    .footer-contact{
+        font-size: .8rem;
+        gap: 7px;
+    }
+    
+    .footer-contact i{
+        font-size: .8rem;
     }
 
     .booking-text h1{

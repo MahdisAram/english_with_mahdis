@@ -77,21 +77,54 @@ const confirmedBookings =
     document.getElementById("confirmedBookings");
 const cancelledBookings =
     document.getElementById("cancelledBookings");
-    
+const logoutButton =
+    document.getElementById("logout-btn");
+// =========================================================
+// ADMIN LOGOUT
+// =========================================================
+logoutButton.addEventListener("click", async function () {
+    const confirmed = window.confirm(
+        "آیا می‌خواهید از پنل مدیریت خارج شوید؟"
+    );
+    if (!confirmed) {
+        return;
+    }
+    logoutButton.disabled = true;
+    logoutButton.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        در حال خروج...
+    `;
+    const { error } =
+        await supabaseClient.auth.signOut();
+    if (error) {
+        console.error(
+            "Logout error:",
+            error
+        );
+        alert(
+            "خروج از حساب انجام نشد. لطفاً دوباره تلاش کنید."
+        );
+        logoutButton.disabled = false;
+        logoutButton.innerHTML = `
+            <i class="fa-solid fa-right-from-bracket"></i>
+            خروج
+        `;
+        return;
+    }
+    window.location.replace(
+        "admin-login.html"
+    );
+});
 bookingTable.addEventListener("click", async function (event) {
     const button = event.target.closest("[data-action]");
-
     if (!button) {
         return;
     }
-
     const bookingId = button.dataset.id;
     const action = button.dataset.action;
-
     if (action === "confirm") {
         await updateBookingStatus(bookingId, "confirmed");
     }
-
     if (action === "cancel") {
         await updateBookingStatus(bookingId, "cancelled");
     }

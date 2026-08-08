@@ -92,7 +92,53 @@ textarea{
 .admin-brand-right{
     direction:rtl;
     text-align:right;
-    text-align:right;
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+/* ===============================
+   LOGOUT BUTTON
+   =============================== */
+   .logout-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:9px 16px;
+    background:var(--creme);
+    color:var(--red);
+    border:3px solid var(--border);
+    border-radius:9px;
+    font-family:"Vazirmatn", Arial, Helvetica, sans-serif;
+    font-size:.9rem;
+    font-weight:800;
+    cursor:pointer;
+    transition:
+        transform .25s ease,
+        background-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+}
+
+.logout-btn:hover{
+    background:var(--red);
+    color:var(--white);
+    transform:translateY(-3px);
+    box-shadow:
+        0 8px 15px rgba(0,0,0,.18);
+}
+
+.logout-btn:active{
+    transform:translateY(0);
+    box-shadow:none;
+}
+
+.logout-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
 }
 
 .admin-brand img{
@@ -570,7 +616,16 @@ td[colspan]{
     }
 
     .admin-brand-right{
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
         text-align:center;
+        gap:10px;
+    }
+
+    .logout-btn{
+        font-size:.85rem;
+        padding:8px 14px;
     }
 
     .admin-brand img{
