@@ -1026,11 +1026,7 @@ textarea{
 }
 /* FOOTER */
 footer{
-    background: linear-gradient(
-        135deg,
-        var(--green),
-        var(--red)
-    );
+    background-color: var(--green);
     color: var(--white);
     padding: 30px 50px;
 }
@@ -1038,19 +1034,18 @@ footer{
 .footer-content{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 30px;
 }
 
 .footer-logo img{
-    width: 70px;
+    width: 120px;
     height: auto;
     display: block;
 }
 
 .footer-text{
-    flex: 1;
-    text-align: center;
+    text-align: left;
 }
 
 .footer-text p{
@@ -1059,7 +1054,7 @@ footer{
 
 .footer-contact{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
@@ -1184,16 +1179,19 @@ footer{
     }
 
     .footer-content{
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: left;
+        gap: 25px;
     }
-
+    
     .footer-logo img{
         width: 100px;
     }
-
+    
     .footer-text{
-        text-align: center;
+        text-align: left;
     }
 }
 
@@ -1285,8 +1283,19 @@ footer{
         line-height: 1.8;
     }
 
+    .footer-content{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .footer-text{
+        text-align: center;
+    }
+    
     .footer-contact{
-        font-size: .9rem;
+        justify-content: center;
     }
 
     .calendar-grid,
@@ -1369,8 +1378,9 @@ footer{
     }
 
     .footer-contact{
-        font-size: .8rem;
-        gap: 7px;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
     }
     
     .footer-contact i{
