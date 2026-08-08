@@ -112,7 +112,7 @@ header{
     margin-right: 10px;
 }
 
-.nav-links > li:last-child > a{
+/* .nav-links > li:last-child > a{
     margin-left: 15px;
     color: var(--red);
     font-size: 20px;
@@ -120,16 +120,16 @@ header{
     direction:rtl;
     font-family:"Vazirmatn", sans-serif;
     transition: 0.5s;
-}
+} */
 
-.nav-links > li:last-child > a:hover{
+/* .nav-links > li:last-child > a:hover{
     background: #f78fb4;
-}
+} */
 
-.nav-links > li:last-child > a i{
+/* .nav-links > li:last-child > a i{
     margin-right: 0;
     margin-left: 10px;
-}
+} */
 
 .lessons-dropdown{
     position: relative;

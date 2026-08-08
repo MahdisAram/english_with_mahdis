@@ -8,30 +8,60 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
-// =========================================================
-// ADMIN AUTHENTICATION
-// =========================================================
 async function requireAdminLogin() {
+    // =====================================================
+    // CHECK LOGIN SESSION
+    // =====================================================
     const {
-        data,
-        error
+        data: sessionData,
+        error: sessionError
     } = await supabaseClient.auth.getSession();
-    if (error) {
+    if (sessionError) {
         console.error(
-            "Could not verify admin session:",
-            error
+            "Could not verify session:",
+            sessionError
         );
-        window.location.replace(
-            "admin-login.html"
-        );
+        window.location.replace("admin-login.html");
         return false;
     }
-    if (!data.session) {
-        window.location.replace(
-            "admin-login.html"
-        );
+    if (!sessionData.session) {
+        window.location.replace("admin-login.html");
         return false;
     }
+    // =====================================================
+    // CHECK ADMIN STATUS
+    // =====================================================
+    const {
+        data: isAdmin,
+        error: adminError
+    } = await supabaseClient.rpc("is_admin");
+    console.log("IS ADMIN:", isAdmin);
+    console.log("ADMIN CHECK ERROR:", adminError);
+    if (adminError) {
+        console.error(
+            "Could not verify admin status:",
+            adminError
+        );
+        alert(
+            "احراز هویت مدیر انجام نشد."
+        );
+        window.location.replace("admin-login.html");
+        return false;
+    }
+    // =====================================================
+    // USER IS LOGGED IN BUT NOT ADMIN
+    // =====================================================
+    if (isAdmin !== true) {
+        alert(
+            "شما اجازه دسترسی به پنل مدیریت را ندارید."
+        );
+        await supabaseClient.auth.signOut();
+        window.location.replace("admin-login.html");
+        return false;
+    }
+    // =====================================================
+    // EVERYTHING IS OK
+    // =====================================================
     return true;
 }
 // =========================================================
@@ -47,6 +77,25 @@ const confirmedBookings =
     document.getElementById("confirmedBookings");
 const cancelledBookings =
     document.getElementById("cancelledBookings");
+    
+bookingTable.addEventListener("click", async function (event) {
+    const button = event.target.closest("[data-action]");
+
+    if (!button) {
+        return;
+    }
+
+    const bookingId = button.dataset.id;
+    const action = button.dataset.action;
+
+    if (action === "confirm") {
+        await updateBookingStatus(bookingId, "confirmed");
+    }
+
+    if (action === "cancel") {
+        await updateBookingStatus(bookingId, "cancelled");
+    }
+});
 // =========================================================
 // LOAD BOOKINGS
 // =========================================================
@@ -79,8 +128,8 @@ async function loadBookings() {
         .order("booking_time", {
             ascending: true
         });
-        console.log("BOOKINGS DATA:", data);
-        console.log("BOOKINGS ERROR:", error);
+    console.log("BOOKINGS DATA:", data);
+    console.log("BOOKINGS ERROR:", error);
     // -----------------------------------------------------
     // HANDLE ERROR
     // -----------------------------------------------------
@@ -114,46 +163,70 @@ async function loadBookings() {
             </tr>
         `;
         return;
-    }
-    // -----------------------------------------------------
-    // DISPLAY BOOKINGS
-    // -----------------------------------------------------
-    bookingTable.innerHTML = "";
-    data.forEach(booking => {
-        const row =
-            document.createElement("tr");
-        row.innerHTML = `
-            <td>
-                ${escapeHTML(booking.full_name)}
-            </td>
-            <td>
-                ${escapeHTML(booking.email)}
-            </td>
-            <td>
-                ${escapeHTML(booking.phone)}
-            </td>
-            <td>
-                ${formatGoal(booking.goal)}
-            </td>
-            <td>
-                ${formatDate(booking.booking_date)}
-            </td>
-            <td>
-                ${formatTime(booking.booking_time)}
-            </td>
-            <td>
-                ${createStatusBadge(booking.status)}
-            </td>
-            <td>
-                ${createActionButtons(booking)}
-            </td>
-        `;
-        bookingTable.appendChild(row);
-    });
-    // -----------------------------------------------------
-    // ADD BUTTON EVENTS
-    // -----------------------------------------------------
-    attachActionListeners();
+        }
+        // -----------------------------------------------------
+        // DISPLAY BOOKINGS
+        // -----------------------------------------------------
+        bookingTable.innerHTML = "";
+        data.forEach(booking => {
+            const row =
+                document.createElement("tr");
+            row.innerHTML = `
+                <td>
+                    ${escapeHTML(booking.full_name)}
+                </td>
+                <td>
+                    ${escapeHTML(booking.email)}
+                </td>
+                <td>
+                    ${escapeHTML(booking.phone)}
+                </td>
+                <td>
+                    ${formatGoal(booking.goal)}
+                </td>
+                <td>
+                    ${formatDate(booking.booking_date)}
+                </td>
+                <td>
+                    ${formatTime(booking.booking_time)}
+                </td>
+                <td>
+                    ${createStatusBadge(booking.status)}
+                </td>
+                <td>
+                    ${createActionButtons(booking)}
+                </td>
+            `;
+            bookingTable.appendChild(row);
+        });
+}
+// =========================================================
+// REALTIME BOOKINGS LISTENER
+// =========================================================
+function subscribeToBookings() {
+    supabaseClient
+        .channel("bookings-changes")
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "bookings"
+            },
+            payload => {
+                console.log(
+                    "BOOKING CHANGE:",
+                    payload
+                );
+                loadBookings();
+            }
+        )
+        .subscribe(status => {
+            console.log(
+                "Realtime status:",
+                status
+            );
+        });
 }
 // =========================================================
 // UPDATE STATISTICS
@@ -290,44 +363,15 @@ function createActionButtons(booking) {
     `;
 }
 // =========================================================
-// ATTACH ACTION BUTTON EVENTS
-// =========================================================
-function attachActionListeners() {
-    const buttons =
-        document.querySelectorAll(
-            "[data-action]"
-        );
-    buttons.forEach(button => {
-        button.addEventListener(
-            "click",
-            async function () {
-                const bookingId =
-                    this.dataset.id;
-                const action =
-                    this.dataset.action;
-                if (action === "confirm") {
-                    await updateBookingStatus(
-                        bookingId,
-                        "confirmed"
-                    );
-                }
-                if (action === "cancel") {
-                    await updateBookingStatus(
-                        bookingId,
-                        "cancelled"
-                    );
-                }
-            }
-        );
-    });
-}
-// =========================================================
 // UPDATE BOOKING STATUS
 // =========================================================
 async function updateBookingStatus(
     bookingId,
     newStatus
 ) {
+    // -----------------------------------------------------
+    // CONFIRM ACTION
+    // -----------------------------------------------------
     let confirmationMessage = "";
     if (newStatus === "confirmed") {
         confirmationMessage =
@@ -337,14 +381,15 @@ async function updateBookingStatus(
         confirmationMessage =
             "آیا از لغو این درخواست مطمئن هستید؟";
     }
-    const confirmed =
-        window.confirm(
-            confirmationMessage
-        );
+    const confirmed = window.confirm(
+        confirmationMessage
+    );
     if (!confirmed) {
         return;
     }
-    // Find clicked button
+    // -----------------------------------------------------
+    // FIND CLICKED BUTTONS
+    // -----------------------------------------------------
     const buttons =
         document.querySelectorAll(
             `[data-id="${bookingId}"]`
@@ -353,43 +398,110 @@ async function updateBookingStatus(
     buttons.forEach(button => {
         button.disabled = true;
     });
-    const { error } =
-        await supabaseClient
-            .from("bookings")
-            .update({
-                status: newStatus
-            })
-            .eq("id", bookingId);
-    // -----------------------------------------------------
-    // HANDLE ERROR
-    // -----------------------------------------------------
-    if (error) {
-        console.error(
-            "Could not update booking status:",
-            error
+    // =====================================================
+    // CANCELLATION
+    // =====================================================
+    if (newStatus === "cancelled") {
+        const { data, error } =
+            await supabaseClient.rpc(
+                "cancel_booking",
+                {
+                    p_booking_id: bookingId
+                }
+            );
+        // -------------------------------------------------
+        // HANDLE ERROR
+        // -------------------------------------------------
+        if (error) {
+            console.error(
+                "Could not cancel booking:",
+                error
+            );
+            alert(
+                "لغو رزرو انجام نشد. لطفاً دوباره تلاش کنید."
+            );
+            buttons.forEach(button => {
+                button.disabled = false;
+            });
+            return;
+        }
+        // -------------------------------------------------
+        // SUCCESS
+        // -------------------------------------------------
+        console.log(
+            "Booking cancelled successfully:",
+            data
         );
         alert(
-            "تغییر وضعیت رزرو انجام نشد. لطفاً دوباره تلاش کنید."
+            "درخواست رزرو با موفقیت لغو شد و زمان آزاد شد."
         );
-        buttons.forEach(button => {
-            button.disabled = false;
-        });
+        await loadBookings();
         return;
     }
-    // -----------------------------------------------------
-    // SUCCESS
-    // -----------------------------------------------------
+    // =====================================================
+    // CONFIRMATION
+    // =====================================================
     if (newStatus === "confirmed") {
+        const { data, error } =
+            await supabaseClient.rpc(
+                "confirm_booking",
+                {
+                    p_booking_id: bookingId
+                }
+            );
+        // -------------------------------------------------
+        // HANDLE ERROR
+        // -------------------------------------------------
+        if (error) {
+            console.error(
+                "Could not confirm booking:",
+                error
+            );
+            // Slot is no longer available
+            if (
+                error.message &&
+                error.message.includes("SLOT_UNAVAILABLE")
+            ) {
+                alert(
+                    "این زمان دیگر آزاد نیست و درخواست نمی‌تواند تأیید شود."
+                );
+            }
+            // Booking was already confirmed
+            else if (
+                error.message &&
+                error.message.includes(
+                    "BOOKING_ALREADY_CONFIRMED"
+                )
+            ) {
+                alert(
+                    "این درخواست قبلاً تأیید شده است."
+                );
+            }
+            // Other errors
+            else {
+                alert(
+                    "تأیید رزرو انجام نشد. لطفاً دوباره تلاش کنید."
+                );
+            }
+            // Re-enable buttons
+            buttons.forEach(button => {
+                button.disabled = false;
+            });
+            return;
+        }
+        // -------------------------------------------------
+        // SUCCESS
+        // -------------------------------------------------
+        console.log(
+            "Booking confirmed successfully:",
+            data
+        );
         alert(
             "درخواست رزرو با موفقیت تأیید شد."
         );
-    } else {
-        alert(
-            "درخواست رزرو لغو شد."
-        );
+        // Reload dashboard
+        await loadBookings();
     }
-    // Reload everything
-    await loadBookings();
 }
 // =========================================================
 // FORMAT DATE
@@ -477,4 +589,5 @@ function escapeHTML(value) {
         return;
     }
     await loadBookings();
+    subscribeToBookings();
 })();
