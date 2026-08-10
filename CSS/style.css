@@ -529,6 +529,19 @@ section h2{
     margin-bottom: 20px;
 }
 
+.skills-intro a{
+    color: var(--red);
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+    text-decoration:underline;
+}
+
+.skills-intro a:hover{
+    color: var(--green);
+    text-decoration: underline;
+}
+
 .language-skills{
     background:var(--creme);
     padding:40px 20px 90px;
