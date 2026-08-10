@@ -703,6 +703,13 @@ footer{
     padding: 0 15px;
 }
 
+/* Match the current 90% Chrome zoom appearance */
+@media (min-width: 1231px) {
+    body {
+        zoom: 0.9;
+    }
+}
+
 @media(min-width:1231px){
     
     .lessons-dropdown:hover .lessons-menu{
