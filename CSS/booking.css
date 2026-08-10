@@ -1077,24 +1077,26 @@ footer{
     text-decoration: underline;
 }
 
-/* =========================================================
-RESPONSIVE
-========================================================= */
-
-/* ---------------------------------------------------------
-TABLET / SMALL DESKTOP
-431px - 1450px
---------------------------------------------------------- */
-
-@media (max-width: 1450px) and (min-width: 769px){
-
-
-    /* NAVBAR */
+/* RESPONSIVE */
+@media(min-width:1306px){
     
-    .navbar-content{
-        position:relative;
+    body {
+        zoom: 0.9;
     }
-    
+
+    .lessons-dropdown:hover .lessons-menu{
+        display:block;
+    }
+}
+
+@media(max-width:1305px){
+
+    .lessons-menu{
+        position:static;
+        width:100%;
+        margin-top:10px;
+    }
+
     .nav-links{
         display:none;
         flex-direction:column;
@@ -1104,7 +1106,7 @@ TABLET / SMALL DESKTOP
         left:0;
         width:100%;
         padding:25px;
-        background:linear-gradient(
+        background: linear-gradient(
             135deg,
             var(--green),
             var(--red)
@@ -1116,50 +1118,26 @@ TABLET / SMALL DESKTOP
     .nav-links.active{
         display:flex;
     }
-    
+
+    .navbar-content{
+        position:relative;
+    }
+
     .hamburger{
         display:block;
         margin-left:auto;
         font-size:32px;
     }
-    
-    .lessons-menu{
-        position:static;
-        width:100%;
-        margin-top:10px;
+
+    .hero .hero-button{
+        width:90%;
+        font-size:28px;
     }
-    
-    
-    /* HERO */
-    
-    .booking-hero{
-        padding:75px 40px 80px;
-    }
-    
-    .booking-hero-content{
-        flex-direction:column;
-        gap:0;
-    }
-    
-    .booking-text{
-        width:100%;
-        max-width:700px;
-        text-align:center;
-    }
-    
-    .booking-text p{
-        margin-bottom:25px;
-    }
-    
-    .hero-book-btn{
-        margin-bottom:0;
-    }
-    
+
     .booking-image{
         width:100%;
         max-width:560px;
-        min-height:0;
-        margin-top:-10px;
+        min-height:480px;
     }
     
     .image-frame{
@@ -1171,60 +1149,70 @@ TABLET / SMALL DESKTOP
     }
     
     .floating-card{
-        right:20px;
+        right:-20px;
     }
-    
-    
-    /* FORM */
-    
-    .form-grid{
-        grid-template-columns:1fr;
+    .divider-gradient{
+        min-height: 30vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
     }
-    
-    .goal-grid{
-        grid-template-columns:repeat(2,1fr);
+
+    .divider-gradient p{
+        font-size: 25px;
+        line-height: 1.8;
+        padding: 0 15px;
     }
-    
-    
-    /* FOOTER */
-    
-    .footer-content{
+
+    .booking-hero-content{
         flex-direction:column;
         text-align:center;
     }
+
+    .booking-text{
+        text-align:center;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .goal-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-content{
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: left;
+        gap: 25px;
+    }
     
     .footer-logo img{
-        width:100px;
+        width: 100px;
     }
     
     .footer-text{
-        text-align:center;
+        text-align: left;
     }
-    
-    }
-    
-    /* ---------------------------------------------------------
-    TABLET / MOBILE
-    768px and below
-    --------------------------------------------------------- */
-    
-    @media (max-width:768px){
-    
+}
+
+@media (max-width: 768px){
+
     section{
-        padding:50px 20px;
+        padding: 50px 20px;
     }
-    
+
     .logo-text{
         font-size:2.3rem;
     }
-    
+
     .navbar-content{
-        padding:0 20px;
+        padding: 0 20px;
     }
-    
-    
-    /* HERO IMAGE */
-    
+
     .booking-image{
         min-height:430px;
         margin-top:20px;
@@ -1279,76 +1267,61 @@ TABLET / SMALL DESKTOP
         bottom:15px;
         transform:scale(.7);
     }
-    
-    
-    /* DIVIDER */
-    
+
     .divider-gradient{
-        min-height:auto;
-        padding:25px 15px;
+        min-height: auto;
+        padding: 25px 15px;
     }
-    
+
     .divider-gradient p{
-        font-size:20px;
-        line-height:1.8;
+        font-size: 20px;
+        line-height: 1.8;
     }
-    
-    
-    /* FOOTER */
-    
+
     footer{
-        padding:30px 20px;
+        padding: 30px 20px;
     }
-    
+
     .footer-text p{
-        font-size:.9rem;
-        line-height:1.8;
+        font-size: .9rem;
+        line-height: 1.8;
     }
-    
+
     .footer-content{
-        flex-direction:column;
-        align-items:center;
-        text-align:center;
-        gap:15px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
     }
     
     .footer-text{
-        text-align:center;
+        text-align: center;
     }
     
     .footer-contact{
-        justify-content:center;
+        justify-content: center;
     }
-    
-    
-    /* CALENDAR */
-    
+
     .calendar-grid,
     .weekdays{
         gap:5px;
     }
-    
+
     .calendar-day{
         font-size:1rem;
     }
-    
+
     .weekdays{
         font-size:.8rem;
     }
-    
-    }
-    
-    /* ---------------------------------------------------------
-    NARROW PHONES
-    430px and below
-    --------------------------------------------------------- */
-    
-    @media (max-width:430px){
-    
+}
+
+@media (max-width: 430px){
+
     .navbar-content{
-        padding:0 15px;
+        padding: 0 15px;
     }
-    
+
     .logo-link{
         gap:19px;
     }
@@ -1360,113 +1333,199 @@ TABLET / SMALL DESKTOP
     .logo-text{
         font-size:1.5rem;
     }
-    
+
     .hamburger{
         font-size:26px;
     }
-    
-    
-    /* HERO */
-    
+
     .booking-hero{
         padding-top:45px;
         padding-bottom:45px;
     }
-    
+
     .booking-hero-content{
         gap:0;
     }
-    
+
     .booking-text p{
         margin-bottom:20px;
     }
-    
+
     .hero-book-btn{
         margin-bottom:0;
     }
-    
+
     .booking-image{
         margin-top:-20px;
     }
-    
-    
-    /* Remove PRIVATE LESSONS label */
-    
+
+    /* Remove the PRIVATE LESSONS label */
     .image-label{
         display:none;
     }
-    
+
     .floating-card{
         right:10px;
         bottom:15px;
     }
-    
-    
-    /* DIVIDER */
-    
+
     .divider-gradient p{
         font-size:18px;
     }
-    
-    
-    /* FOOTER */
-    
+
     .footer-logo img{
         width:80px;
     }
-    
+
     .footer-text p{
         font-size:.8rem;
     }
-    
+
     .footer-contact{
-        flex-wrap:wrap;
-        justify-content:center;
-        text-align:center;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
     }
     
     .footer-contact i{
-        font-size:.8rem;
+        font-size: .8rem;
     }
-    
-    
-    /* HERO TEXT */
-    
+
     .booking-text h1{
         font-size:2rem;
     }
-    
-    .booking-text h3{
+
+    .booking-text h3{    
         font-size:1.3rem;
     }
-    
-    
-    /* BOOKING CARDS */
-    
-    .booking-card .card-body{
+
+    .booking-card .card-body{    
         padding:20px;
     }
-    
-    .goal-grid{
+
+    .goal-grid{    
         grid-template-columns:1fr;
     }
-    
-    
-    /* CALENDAR */
-    
+
     .calendar-grid,
     .weekdays{
         gap:3px;
     }
-    
+
     .calendar-day{
         font-size:.9rem;
         border-width:2px;
     }
-    
+
     .weekdays{
         font-size:.7rem;
     }
-    
+}
+
+@media (max-width:1305px) and (min-width:431px){
+
+    .lessons-menu{
+        position:static;
+        width:100%;
+        margin-top:10px;
     }
-    
+
+    .nav-links{
+        display:none;
+        flex-direction:column;
+        gap:15px;
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        padding:25px;
+        background:linear-gradient(
+            135deg,
+            var(--green),
+            var(--red)
+        );
+        text-align:center;
+        z-index:1000;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .navbar-content{
+        position:relative;
+    }
+
+    .hamburger{
+        display:block;
+        margin-left:auto;
+        font-size:32px;
+    }
+
+    .booking-hero{
+        padding:75px 40px 80px;
+    }
+
+    .booking-hero-content{
+        flex-direction:column;
+        text-align:center;
+        gap:0;
+    }
+
+    .booking-text{
+        width:100%;
+        max-width:700px;
+        text-align:center;
+    }
+
+    .booking-text p{
+        margin-bottom:25px;
+    }
+
+    .hero-book-btn{
+        margin-bottom:0;
+    }
+
+    .booking-image{
+        width:100%;
+        max-width:560px;
+        min-height:0;
+        margin-top:-10px;
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+    }
+
+    .image-frame{
+        width:min(100%, 450px);
+    }
+
+    .image-main{
+        height:450px;
+    }
+
+    .floating-card{
+        right:20px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .goal-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .footer-logo img{
+        width:100px;
+    }
+
+    .footer-text{
+        text-align:center;
+    }
+}
