@@ -466,254 +466,305 @@ footer {
     text-decoration: underline;
 }
 
-/* =========================
-   RESPONSIVE NAVIGATION
-   ========================= */
+
+/* ---------------------------------------------------------
+LARGE DESKTOP
+1451px and above
+--------------------------------------------------------- */
 
 @media (min-width: 1451px) {
+
     .lessons-dropdown:hover .lessons-menu {
         display: block;
     }
-}
-
-@media (max-width: 1450px) {
+    
+    }
+    
+    /* ---------------------------------------------------------
+    TABLET / SMALL DESKTOP
+    769px - 1450px
+    --------------------------------------------------------- */
+    
+    @media (max-width: 1450px) and (min-width: 769px) {
+    /* NAVIGATION */
+    
+    .navbar-content {
+        position: relative;
+    }
+    
     .lessons-menu {
         position: static;
         width: 100%;
         margin-top: 10px;
     }
-
+    
     .nav-links {
         position: absolute;
         top: 80px;
         left: 0;
         z-index: 1000;
+    
         display: none;
         flex-direction: column;
+    
         width: 100%;
         gap: 15px;
         padding: 25px;
+    
         text-align: center;
+    
         background: linear-gradient(
             135deg,
             var(--green),
             var(--red)
         );
     }
-
+    
     .nav-links.active {
         display: flex;
     }
-
+    
     .hamburger {
         display: block;
         margin-left: auto;
         font-size: 32px;
     }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 25px;
-        text-align: center;
-    }
-
-    .footer-logo img {
-        width: 100px;
-    }
-
-    .footer-text {
-        text-align: center;
-    }
-}
-
-/* =========================
-   TABLET
-   ========================= */
-
-@media (max-width: 1024px) {
+    
+    
+    /* ABOUT SECTION */
+    
     .about-container {
         grid-template-columns: 1fr;
         gap: 50px;
     }
-
+    
     .about-image-wrapper {
         max-height: 480px;
         order: 1;
     }
-
+    
     .about-content {
         order: 2;
     }
-
+    
     .about-title-badge {
         margin-right: 20px;
         margin-bottom: 20px;
         padding: 15px 38px 15px 30px;
+    
         transform: translateY(-80px) rotate(6deg);
     }
-
+    
     .about-title-badge h2 {
         font-size: 2.8rem;
     }
-
+    
     .about-title-badge .smiley-icon {
         width: 54px;
         height: 54px;
         font-size: 2.8rem;
     }
-
+    
     .about-bio {
         margin-top: -50px;
     }
-}
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 768px) {
+    
+    
+    /* FOOTER */
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+    
+    .footer-logo img {
+        width: 100px;
+    }
+    
+    .footer-text {
+        text-align: center;
+    }
+    
+    }
+    
+    /* ---------------------------------------------------------
+    MOBILE
+    768px and below
+    --------------------------------------------------------- */
+    
+    @media (max-width: 768px) {
+    
     section {
         padding: 50px 20px;
     }
-
+    
+    
+    /* NAVBAR */
+    
     .navbar-content {
         padding: 0 20px;
     }
-
+    
     .logo-text {
         font-size: 2.3rem;
     }
-
+    
+    
+    /* FOOTER */
+    
     footer {
         padding: 30px 20px;
     }
-
+    
     .footer-content {
         align-items: center;
         gap: 15px;
     }
-
+    
     .footer-text {
         text-align: center;
     }
-
+    
     .footer-text p {
         font-size: 0.9rem;
         line-height: 1.8;
     }
-
+    
     .footer-contact {
         justify-content: center;
     }
-
+    
+    
+    /* ABOUT SECTION */
+    
     .about-section {
         padding: 40px 20px;
     }
-
+    
     .about-title-badge {
         align-self: center;
+    
         gap: 16px;
+    
         margin-right: 0;
         margin-bottom: 15px;
+    
         padding: 14px 30px 14px 25px;
+    
         border-width: 3.5px;
         border-radius: 11px;
+    
         transform: translateY(-65px) rotate(4deg);
     }
-
+    
     .about-title-badge h2 {
         font-size: 2.4rem;
         white-space: nowrap;
     }
-
+    
     .about-title-badge .smiley-icon {
         width: 50px;
         height: 50px;
         font-size: 2.6rem;
     }
-
+    
     .about-bio {
         margin-top: -55px;
         font-size: 1.1rem;
         line-height: 2;
     }
-
+    
     .about-cards-grid {
         grid-template-columns: 1fr;
         gap: 30px;
     }
-
+    
     .card-pill {
         padding: 6px 20px;
         font-size: 1.25rem;
     }
-
+    
     .card-text {
         font-size: 1rem;
     }
-}
-
-/* =========================
-   SMALL MOBILE
-   ========================= */
-
-@media (max-width: 430px) {
+    
+    }
+    
+    /* ---------------------------------------------------------
+    NARROW PHONES
+    430px and below
+    --------------------------------------------------------- */
+    
+    @media (max-width: 430px) {
+    
+    /* NAVBAR */
+    
     .navbar-content {
         padding: 0 15px;
     }
-
+    
     .logo-link {
         gap: 19px;
     }
-
+    
     .nav-logo img {
         width: 70px;
     }
-
+    
     .logo-text {
         font-size: 1.5rem;
     }
-
+    
     .hamburger {
         font-size: 26px;
     }
-
+    
+    
+    /* FOOTER */
+    
     .footer-logo img {
         width: 80px;
     }
-
+    
     .footer-text p {
         font-size: 0.8rem;
     }
-
+    
     .footer-contact {
         flex-wrap: wrap;
         justify-content: center;
         text-align: center;
     }
-
+    
     .footer-contact i {
         font-size: 0.8rem;
     }
-
+    
+    
+    /* ABOUT TITLE */
+    
     .about-title-badge {
         gap: 12px;
         margin-bottom: 10px;
         padding: 12px 24px 12px 20px;
+    
         transform: translateY(-80px) rotate(4deg);
     }
-
+    
     .about-title-badge h2 {
         font-size: 2rem;
     }
-
+    
     .about-title-badge .smiley-icon {
         width: 44px;
         height: 44px;
         font-size: 2.3rem;
     }
-
+    
     .about-bio {
         margin-top: -50px;
     }
-}
+    
+    }
+    
