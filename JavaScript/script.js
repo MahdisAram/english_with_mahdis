@@ -17,22 +17,23 @@ if (hamburger && navLinks) {
     });
     document.querySelectorAll(".nav-links a").forEach(link => {
         link.addEventListener("click", () => {
-            if (link.id !== "lessons-btn") {
-                navLinks.classList.remove("active");
-            }
+            navLinks.classList.remove("active");
         });
     });
 }
 // ==========================
 // LESSONS DROPDOWN
 // ==========================
+const lessonsDropdown = document.querySelector(".lessons-dropdown");
 const lessonsBtn = document.getElementById("lessons-btn");
 const lessonsMenu = document.getElementById("lessons-menu");
 
-if (lessonsBtn && lessonsMenu) {
-    lessonsBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        lessonsMenu.classList.toggle("show");
+if (lessonsDropdown && lessonsMenu) {
+    lessonsDropdown.addEventListener("mouseenter", () => {
+        lessonsMenu.classList.add("show");
+    });
+    lessonsDropdown.addEventListener("mouseleave", () => {
+        lessonsMenu.classList.remove("show");
     });
 }
 // ==========================
@@ -49,10 +50,9 @@ document.addEventListener("click", (event) => {
         navLinks.classList.remove("active");
     }
     if (
-        lessonsBtn &&
+        lessonsDropdown &&
         lessonsMenu &&
-        !lessonsBtn.contains(event.target) &&
-        !lessonsMenu.contains(event.target)
+        !lessonsDropdown.contains(event.target)
     ) {
         lessonsMenu.classList.remove("show");
     }
