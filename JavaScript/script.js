@@ -295,7 +295,6 @@ if (timeGrid) {
     timeGrid.innerHTML =
         "<p>لطفاً ابتدا تاریخ را انتخاب کنید.</p>";
 }
-loadAvailability();
 // ==========================
 // PERSIAN NUMBERS
 // ==========================
@@ -518,16 +517,19 @@ function isPastDate(
             selected.gm - 1,
             selected.gd
         );
-    const now =
-        new Date();
-    now.setHours(
+    const iranNow = new Date(
+        new Date().toLocaleString("en-US", {
+            timeZone: "Asia/Tehran"
+        })
+    );
+    iranNow.setHours(
         0,
         0,
         0,
         0
     );
     return (
-        selectedGregorian < now
+        selectedGregorian < iranNow
     );
 }
 // ==========================
@@ -600,3 +602,4 @@ nextMonth.addEventListener(
         generateCalendar();
     }
 );
+loadAvailability();
