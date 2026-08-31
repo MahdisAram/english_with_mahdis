@@ -270,8 +270,14 @@ const nextMonth =
 // ==========================
 // CALENDAR STATE
 // ==========================
+// Get today's date based on Iran's timezone
+const iranDate = new Date(
+    new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Tehran"
+    })
+);
 const today =
-    jalaali.toJalaali(new Date());
+    jalaali.toJalaali(iranDate);
 let currentYear =
     today.jy;
 let currentMonth =
